@@ -1,0 +1,165 @@
+---
+title: "Infographics"
+description: "Compact visual summaries of alternative causal pathways for a science audience."
+toc: false
+---
+
+::: {.hero-panel}
+## Recruitment as a sequence of survival gates
+
+The literature points to a sequence: spawners produce eggs, environment and transport set larval distribution, prey and production determine age-0 condition, winter filters age-0 fish into age 1, and predation overlap filters age-1 and age-2 fish into age 3.
+:::
+
+::: {.stage-strip}
+::: {.stage-card .physical}
+**Spawners**
+
+SSB, maturity, spawning location
+:::
+
+::: {.arrow-card}
+&rarr;
+:::
+
+::: {.stage-card .prey}
+**Eggs and larvae**
+
+Temperature, transport, local prey
+:::
+
+::: {.arrow-card}
+&rarr;
+:::
+
+::: {.stage-card .condition}
+**Age-0 fall fish**
+
+Size, diet lipid, total energy
+:::
+
+::: {.arrow-card}
+&rarr;
+:::
+
+::: {.stage-card .predation}
+**Age-1 and age-2**
+
+Cannibalism and predator overlap
+:::
+
+::: {.arrow-card}
+&rarr;
+:::
+
+::: {.stage-card .survival}
+**Age-3 recruits**
+
+Year-class signal
+:::
+:::
+
+## Alternative Causal Explanations
+
+::: {.alt-grid}
+::: {.alt-card}
+### A. Bottom-up energy
+
+```{mermaid}
+flowchart TB
+  Ice["Ice and bloom timing"] --> Prey["Lipid-rich prey"]
+  Mix["Summer nutrient flux"] --> Prey
+  Prey --> Energy["Age-0 total energy"]
+  Energy --> Winter["Winter survival"]
+  Winter --> R["Age-3 recruits"]
+```
+
+Most diagnostic indicators: age-0 total energy, diet lipid, Calanus/euphausiid biomass.
+:::
+
+::: {.alt-card}
+### B. Top-down overlap
+
+```{mermaid}
+flowchart TB
+  Adults["Adult pollock"] --> Overlap["Predator overlap"]
+  Arrow["Arrowtooth flounder"] --> Overlap
+  Cold["Cold pool"] --> Overlap
+  Overlap --> Mort["Age-1/2 mortality"]
+  Mort --> R["Age-3 recruits"]
+```
+
+Most diagnostic indicators: juvenile-adult overlap, arrowtooth overlap, age-1 predation mortality.
+:::
+
+::: {.alt-card}
+### C. Transport match-mismatch
+
+```{mermaid}
+flowchart TB
+  Spawn["Spawning location"] --> Dist["Larval distribution"]
+  Wind["Wind and currents"] --> Dist
+  Dist --> Match["Prey match"]
+  Dist --> Refuge["Predator separation"]
+  Match --> R["Age-3 recruits"]
+  Refuge --> R
+```
+
+Most diagnostic indicators: particle-tracking output, observed spawning distribution, prey/predator collocation.
+:::
+
+::: {.alt-card}
+### D. Switching control
+
+```{mermaid}
+flowchart TB
+  Climate["Climate state"] --> Prey["Bottom-up prey field"]
+  Prey --> Age0["Age-0 condition"]
+  Prior["Prior cohorts"] --> Pred["Predator field"]
+  Age0 --> Overlap["Later overlap"]
+  Pred --> Overlap
+  Overlap --> R["Age-3 recruits"]
+```
+
+Most diagnostic indicators: climate-state interactions, adult biomass, predator biomass, repeated cold/warm year sequences.
+:::
+:::
+
+## Evidence Weight
+
+::: {.evidence-grid}
+::: {.evidence-card}
+### Age-0 energy gate
+
+::: {.bar .energy}
+:::
+
+Strongest mediator. Fall total energy, lipid-rich prey, and energy density repeatedly link to overwinter survival [@heintz2013; @siddon2013; @sogard2000].
+:::
+
+::: {.evidence-card}
+### Age-1 predation gate
+
+::: {.bar .pred}
+:::
+
+Strong support from adult-juvenile overlap, cannibalism, and arrowtooth predation models [@mueter2006; @spencer2016].
+:::
+
+::: {.evidence-card}
+### Transport and spawning
+
+::: {.bar .transport}
+:::
+
+Moderate support. Spawning-area shifts improve modeled distributions, but transport, temperature, and prey are confounded [@petrik2015].
+:::
+
+::: {.evidence-card}
+### Simple cold-pool effect
+
+::: {.bar .cold}
+:::
+
+Mixed support. Cold pool matters for predator distributions, but a direct cold-pool recruitment mechanism is weak [@mueter2006; @spencer2016].
+:::
+:::

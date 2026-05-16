@@ -1,0 +1,79 @@
+---
+title: "Eastern Bering Sea Walleye Pollock Early Survival Pathways"
+description: "A Quarto synthesis of causal hypotheses and DAG alternatives for prerecruit survival to age 3."
+---
+
+This site summarizes causal hypotheses for eastern Bering Sea walleye pollock survival from eggs and larvae through age-0, age-1, and age-2 fish reaching age 3. The synthesis is based on the local paper set in the parent reprints folder, with web-visible citation links supplied through DOI and source URLs.
+
+The papers often quantify recruitment at age 1 or age 2. Here, **age-3 recruitment** means the same cohort passing through the prerecruit filters and remaining alive and available at age 3.
+
+## Main Conclusion
+
+Two mechanisms have the clearest support:
+
+1. **Age-0 energy gate.** Late-summer and fall condition, especially total energy, lipid reserves, and access to lipid-rich copepods and euphausiids, strongly affects overwinter survival to age 1 [@heintz2013; @siddon2013; @sogard2000; @sigler2016].
+2. **Age-1 predation gate.** Juvenile survival after the first winter is strongly affected by spatial overlap with adult pollock, arrowtooth flounder, and other predators, with age-1 mortality particularly important [@mueter2006; @spencer2016].
+
+Temperature, sea ice, stratification, summer wind mixing, and transport matter because they modify these gates. Average temperature alone is a useful proxy only when the active pathway is unresolved [@smart2012; @petrik2015; @gann2016].
+
+## Integrated Causal Map
+
+```{mermaid}
+flowchart LR
+  SSB["Spawning stock biomass"] --> EG["Egg abundance"]
+  TEMP["Seasonal temperature"] --> DEV["Development rate and hatch timing"]
+  TEMP --> SPAWN["Spawning timing and location"]
+  ICE["Sea ice extent and retreat timing"] --> BLOOM["Spring bloom timing and location"]
+  WIND["Wind, storms, and circulation"] --> TRANS["Egg and larval transport"]
+  WIND --> MIX["Summer mixing and nutrient flux"]
+  SPAWN --> ELDIST["Egg and larval distribution"]
+  EG --> ELDIST
+  DEV --> LARV["Larval duration and growth"]
+  TRANS --> ELDIST
+  BLOOM --> ZOO["Copepods and euphausiids"]
+  MIX --> PP["Summer primary production"]
+  PP --> ZOO
+  ELDIST --> PREYMATCH["Spatial match with prey"]
+  ZOO --> PREYMATCH
+  PREYMATCH --> LARV
+  LARV --> A0SIZE["Age-0 size"]
+  ZOO --> A0DIET["Age-0 diet lipid"]
+  A0DIET --> A0ENERGY["Age-0 energy density and total energy"]
+  A0SIZE --> WINTER["Overwinter survival to age 1"]
+  A0ENERGY --> WINTER
+  SST["Late-summer SST and metabolic demand"] --> A0ENERGY
+  SST --> WINTER
+  ADULT["Adult pollock biomass"] --> CANN["Cannibalism pressure"]
+  COLD["Cold pool area"] --> PREDIST["Predator distribution"]
+  ARROW["Arrowtooth and other predator biomass"] --> PRED["Predation pressure"]
+  ELDIST --> JUVLOC["Age-0 and age-1 distribution"]
+  JUVLOC --> OVERLAP["Juvenile-predator spatial overlap"]
+  PREDIST --> OVERLAP
+  CANN --> OVERLAP
+  OVERLAP --> A12SURV["Age-1 and age-2 survival"]
+  PRED --> A12SURV
+  WINTER --> A12SURV
+  A12SURV --> AGE3["Age-3 recruitment"]
+```
+
+## Site Contents
+
+- [Evidence](evidence.qmd): stage-specific synthesis and candidate indicators.
+- [DAGs](dags.qmd): alternative directed acyclic graphs for competing hypotheses.
+- [Infographics](infographics.qmd): compact visual summaries for a science audience.
+- [References](references.qmd): cited references with DOI and source links.
+
+## Practical Model
+
+The minimum useful causal model is:
+
+```text
+Age3_recruitment =
+  f(spawner output,
+    age0 energy condition,
+    age1-age2 predator overlap,
+    cohort density,
+    observation/assessment uncertainty)
+```
+
+In that model, age-0 condition is a mediator of ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap is a mediator of cold pool area, predator biomass, juvenile distribution, and adult pollock biomass.

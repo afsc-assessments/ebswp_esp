@@ -1,0 +1,109 @@
+---
+title: "DAG Alternatives"
+description: "Directed acyclic graph alternatives for hypotheses affecting prerecruit survival."
+---
+
+Each DAG is deliberately simpler than the integrated map. The purpose is to define testable alternatives, not to draw every plausible link.
+
+## DAG A: Bottom-Up Energy Storage
+
+**Main claim:** recruitment is set primarily by whether seasonal production creates lipid-rich prey and age-0 fish accumulate enough total energy before winter [@heintz2013; @siddon2013; @sigler2016].
+
+```{mermaid}
+flowchart LR
+  ICE["Ice retreat timing"] --> BLOOM["Bloom timing and location"]
+  WIND["Summer storms and wind mixing"] --> NUT["Surface nutrient flux"]
+  NUT --> PP["Summer primary production"]
+  BLOOM --> LZOO["Large copepods and euphausiids"]
+  PP --> LZOO
+  LZOO --> DIET["Age-0 diet lipid"]
+  DIET --> ED["Age-0 energy density"]
+  GROW["Age-0 growth and size"] --> TE["Age-0 total energy"]
+  ED --> TE
+  TE --> WINS["Winter survival to age 1"]
+  WINS --> A12["Age-1 and age-2 abundance"]
+  A12 --> R3["Age-3 recruitment"]
+```
+
+**Strong predictions:**
+
+- Fall total energy should mediate most environment-recruitment relationships.
+- Cold years with low summer nutrient flux can fail despite favorable ice timing.
+- Age-0 diet lipid, Calanus/euphausiid biomass, and age-0 energy density should be leading indicators.
+
+## DAG B: Top-Down Predation And Spatial Overlap
+
+**Main claim:** recruitment is set primarily by whether juveniles overlap spatially with adult pollock, arrowtooth flounder, and other predators during age-0 to age-2 [@mueter2006; @spencer2016].
+
+```{mermaid}
+flowchart LR
+  ADULT["Adult pollock biomass"] --> CANN["Cannibalism pressure"]
+  ARROW["Arrowtooth biomass"] --> ATP["Arrowtooth predation pressure"]
+  COLD["Cold pool extent"] --> ATDIST["Arrowtooth distribution"]
+  TEMP["Temperature"] --> ATDIST
+  TRAN["Larval transport and juvenile distribution"] --> JLOC["Juvenile location"]
+  SPAWN["Spawning location"] --> JLOC
+  ATDIST --> OVER["Juvenile-predator overlap"]
+  JLOC --> OVER
+  CANN --> OVER
+  ATP --> MORT["Age-1 and age-2 mortality"]
+  OVER --> MORT
+  MORT --> SURV["Survival to age 3"]
+  SURV --> R3["Age-3 recruitment"]
+```
+
+**Strong predictions:**
+
+- Adult/juvenile overlap and arrowtooth overlap should improve predictions after accounting for age-0 condition.
+- Warm years can increase risk if predators move into juvenile pollock habitat.
+- Spatial metrics should outperform basin-average temperature when predation is the active filter.
+
+## DAG C: Transport And Spawning-Location Match-Mismatch
+
+**Main claim:** early distribution, set by adult spawning location and transport, controls whether larvae and juveniles encounter prey, nursery habitat, and predators [@petrik2015; @smart2012].
+
+```{mermaid}
+flowchart LR
+  TEMP["Temperature"] --> SPAT["Spawning time"]
+  TEMP --> SPAL["Spawning location"]
+  WIND["Wind forcing"] --> CURR["Cross-shelf and along-shelf transport"]
+  SPAT --> INIT["Initial egg distribution"]
+  SPAL --> INIT
+  INIT --> ELD["Egg-larval distribution"]
+  CURR --> ELD
+  ELD --> PREY["Spatial match with copepod prey"]
+  ELD --> SAFE["Spatial separation from adult predators"]
+  PREY --> LGROW["Larval growth"]
+  SAFE --> LMORT["Lower larval and juvenile mortality"]
+  LGROW --> A0["Age-0 abundance and size"]
+  LMORT --> A0
+  A0 --> R3["Age-3 recruitment"]
+```
+
+**Strong predictions:**
+
+- Particle tracking plus observed spawning distributions should explain more than advection alone.
+- Warm/cold distribution shifts should predict prey match and predator overlap.
+- Recruitment effects should be strongest before or around age 0, unless juvenile redistribution later overwrites the early pattern.
+
+## DAG D: Time-Indexed Switching Control
+
+**Main claim:** climate state changes which control dominates. Bottom-up control dominates when prey limits juvenile condition; top-down control becomes stronger after productive years increase predator or adult pollock biomass [@mueter2006; @sigler2016].
+
+```{mermaid}
+flowchart LR
+  CLIM["Climate state in year t"] --> ICE["Ice retreat and SST in year t"]
+  ICE --> PREY["Prey field for cohort t"]
+  PREY --> COND["Age-0 condition for cohort t"]
+  COND --> AGE1["Age-1 abundance of cohort t+1"]
+  PCOHORT["Prior cohort strength t-1"] --> PREDAD["Adult and juvenile predator field t+1"]
+  AGE1 --> OVER["Predator-prey overlap t+1 to t+2"]
+  PREDAD --> OVER
+  OVER --> AGE3["Age-3 recruitment of cohort t+3"]
+```
+
+**Strong predictions:**
+
+- Ice timing effects should interact with adult biomass or predator biomass.
+- Consecutive favorable bottom-up years can later increase top-down mortality.
+- Recruitment models should allow state-dependent effects rather than a single stationary environment coefficient.

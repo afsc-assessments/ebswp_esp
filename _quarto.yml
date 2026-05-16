@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - evidence.qmd
+    - dags.qmd
+    - infographics.qmd
+    - references.qmd
+
+website:
+  title: "EBSWP Early Survival Pathways"
+  site-url: "https://jimianelli.github.io/ebswp_esp/"
+  repo-url: "https://github.com/jimianelli/ebswp_esp"
+  repo-actions: [source, issue]
+  navbar:
+    left:
+      - href: index.qmd
+        text: Overview
+      - href: evidence.qmd
+        text: Evidence
+      - href: dags.qmd
+        text: DAGs
+      - href: infographics.qmd
+        text: Infographics
+      - href: references.qmd
+        text: References
+  page-footer:
+    left: "Eastern Bering Sea walleye pollock early survival pathways"
+    right: "Built with Quarto"
+
+bibliography: references.bib
+link-citations: true
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: false
+    smooth-scroll: true
+    link-external-icon: true
+    link-external-newwindow: true
+    citations-hover: true
+    footnotes-hover: true
+
+execute:
+  freeze: auto

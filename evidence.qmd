@@ -1,0 +1,77 @@
+---
+title: "Evidence Synthesis"
+description: "Stage-specific evidence for causal hypotheses affecting prerecruit walleye pollock survival."
+---
+
+## Stage 1: Spawning Output, Egg Production, And Early Larval Supply
+
+**Working hypothesis:** spawning biomass and spawning location set initial propagule supply, but most cohort variation is filtered later.
+
+Smart et al. found that eggs, yolksac larvae, and preflexion larvae were associated with spawning stock biomass, while late larvae and juveniles were not [@smart2012]. That supports a causal path from adult spawners to early-stage abundance, but also implies substantial mortality or redistribution after early larval stages. Duffy-Anderson et al. review the broader first-year evidence and emphasize that first-year survival, rather than egg production alone, is central to year-class strength [@duffyanderson2016].
+
+**DAG implication:** include `spawning stock biomass -> egg abundance`, but avoid a direct dominant path from egg abundance to age-3 recruitment without intervening survival nodes.
+
+## Stage 2: Temperature, Spawning Distribution, And Transport
+
+**Working hypothesis:** climate affects recruitment partly by changing where and when adults spawn, and by changing transport pathways and spatial overlap with prey and predators.
+
+Petrik et al. used an individual-based biophysical model and concluded that advection alone and spawning timing shifts alone did not reproduce warm-cold distribution differences. Changes in spawning areas, especially contracted spawning in cold years, best matched observations [@petrik2015]. Mueter et al. found support for larval transport, with survival increasing under stronger northward and weaker eastward transport, but noted that transport and temperature were difficult to separate statistically [@mueter2006]. Smart et al. found that winds affected early-stage transport depth and abundance patterns but did not support a simple encounter-turbulence effect for all feeding stages [@smart2012].
+
+**DAG implication:** represent `temperature -> spawning time/location` and `wind/circulation -> transport` separately from `temperature -> prey and metabolic demand`.
+
+## Stage 3: Larval Feeding And Early Growth
+
+**Working hypothesis:** local prey concentration and temperature influence feeding success, development rate, and vulnerability to size-dependent mortality.
+
+Feeding stages were positively associated with local copepod concentrations in Smart et al., while broad-scale zooplankton biomass was less informative [@smart2012]. Brodeur et al. showed spatial differences in age-0 condition around frontal habitat near the Pribilof Islands, with offshore fish in better condition than inshore fish [@brodeur2000]. This supports using local prey and habitat metrics rather than only basin-scale prey biomass.
+
+**DAG implication:** use local prey availability and distributional match as proximate parents of larval growth.
+
+## Stage 4: Age-0 Summer And Fall Energy Storage
+
+**Working hypothesis:** age-0 fish need both size and energy stores before winter; lipid-rich prey availability in late summer and fall is one of the strongest mechanistic links to survival.
+
+Heintz et al. found that age-0 pollock diets had about threefold higher lipid content in cold years than warm years; fish energy density was 33% higher in cold years; and total energy in fall was positively correlated with age-1 recruits per spawner [@heintz2013]. Siddon et al. showed a shift in energy allocation: larvae prioritize somatic growth, while post-metamorphic age-0 juveniles allocate more to lipid storage. The period after larval development and before winter is a short critical period for storage [@siddon2013].
+
+Moss et al. found age-0 energy density was greater in cool years, with euphausiids important in cool-year diets and intra-cohort cannibalism higher in warm years [@moss2009]. Sigler et al. synthesize the mechanism as timing plus location: late ice retreat can support copepods/euphausiids and a spatial match with age-0 pollock, allowing lipid-rich diets [@sigler2016]. Gann et al. explain the poor 2007 year class as a cold-year exception: strong stratification and few summer wind-mixing events limited nutrient flux, primary production, and age-0 growth [@gann2016].
+
+Strasburger et al. found that pollock and Pacific cod partitioned prey in cold 2008, but warned that warm years could increase competition for suboptimal prey and predation [@strasburger2014]. Buckley et al. show that copepods and euphausiids remain key prey groups, with climate-mediated zooplankton changes likely affecting pollock differently by size class [@buckley2016].
+
+**DAG implication:** age-0 total energy should be treated as a central mediator between environment/prey and recruitment. Cold years can be beneficial, but only when summer nutrient flux and prey production are adequate.
+
+## Stage 5: Winter Survival From Age 0 To Age 1
+
+**Working hypothesis:** overwinter survival depends on body size, lipid reserves, winter duration, temperature, and prey availability.
+
+Sogard and Olla experimentally showed that large size, high initial condition, and cold temperatures increased starvation survival. Bering Sea age-0 fish sampled in September were smaller and lower in lipid than lab fish that survived starvation, implying field vulnerability [@sogard2000]. Heintz et al. connected fall total energy to age-1 recruits per spawner [@heintz2013]. Siddon et al. and Sigler et al. both frame the late-summer/fall period as preparation for winter rather than merely a growth period [@siddon2013; @sigler2016].
+
+**DAG implication:** `age0_size` and `age0_energy_density` should be parents of `winter_survival_to_age1`.
+
+## Stage 6: Age-1 And Age-2 Survival To Age 3
+
+**Working hypothesis:** after age 1, recruitment to age 3 is filtered mainly by predation, spatial overlap with predators, growth, and distribution relative to the cold pool and prey.
+
+Mueter et al. found the strongest environmental effects on survival at the early juvenile stage, with little evidence for environmental effects at the late juvenile age-2 stage. Age-1 predation accounted for a large share of variability in stock-recruit residuals, and juvenile-adult spatial overlap was a strong predictor [@mueter2006]. The earlier PCCRC report reached a similar conclusion, finding the strongest environmental effects at age 1 and emphasizing cannibalism or juvenile-adult overlap [@mueter2004].
+
+Spencer et al. modeled arrowtooth flounder predation on pollock ages 1-3. Arrowtooth avoid the cold pool, juvenile pollock are less temperature-sensitive, and warm-year predator movement into the northwest middle shelf could increase age-1 predation mortality [@spencer2016].
+
+**DAG implication:** include both `adult_pollock_biomass -> cannibalism` and `arrowtooth_biomass/cold_pool -> predator_overlap -> age1_age2_survival`.
+
+## Stage 7: Climate Regime And Switching Control
+
+**Working hypothesis:** bottom-up and top-down controls alternate or interact depending on ice timing, temperature, prey production, adult biomass, and predator biomass.
+
+Mueter et al. concluded that bottom-up and top-down processes are both important. Ice effects were modified by adult pollock biomass, consistent with oscillating control [@mueter2006]. Sigler et al. argue that late-ice years can improve copepod, euphausiid, and age-0 pollock production; if such years occur successively, top-down control may increase [@sigler2016]. Mueter et al. projected lower future recruitment under warmer late-summer SST, especially when predation is included [@mueter2011]. Spencer et al. found projected biomass declines were driven mainly by the negative SST-recruitment relationship, with predation overlap adding risk under some predator-distribution scenarios [@spencer2016].
+
+**DAG implication:** use time indexing to keep the graph acyclic, e.g., `cohort_strength_t-1 -> predator/adult_biomass_t -> predation_on_cohort_t`.
+
+## Candidate Indicators
+
+| Process | Candidate indicators |
+|---|---|
+| Spawning and early-stage supply | SSB, egg abundance, maturity or spawning timing, observed or modeled spawning location |
+| Physical forcing | Ice retreat date, cold pool area, spring transition or bloom date, late-summer SST, summer wind-mixing index, stratification, surface silicic acid |
+| Prey field | Local copepod concentrations for larvae, Calanus/euphausiid biomass, prey lipid content, spatial match indices for age-0 fish |
+| Age-0 state | Length, weight, energy density, percent lipid, total energy, diet lipid, stomach fullness |
+| Top-down risk | Adult pollock biomass, arrowtooth biomass, Pacific cod abundance, juvenile-adult overlap, juvenile-arrowtooth overlap, age-1 predation mortality |
+| Recruitment response | Survival to age 1, survival to age 2, age-3 recruitment residuals, year-class strength from assessment |

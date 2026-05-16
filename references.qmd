@@ -1,0 +1,15 @@
+---
+title: "References"
+description: "Cited references with DOI and source links."
+nocite: |
+  @*
+---
+
+This page lists all cited references. Citation links in the synthesis pages jump to entries here, and DOI/URL fields provide web-visible links to reference records or source pages.
+
+The published site intentionally does not include local PDF copies. Many PDFs in the working folder are publisher articles, so the public site links to DOI records, NOAA repository records, or project pages instead.
+
+## References
+
+::: {#refs}
+:::

@@ -199,49 +199,65 @@ div.csl-indent {
 </section>
 <section id="integrated-causal-map" class="level2">
 <h2 class="anchored" data-anchor-id="integrated-causal-map">Integrated Causal Map</h2>
+<div class="dag-panel overview-dag">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  SSB["Spawning stock biomass"] --&gt; EG["Egg abundance"]
-  TEMP["Seasonal temperature"] --&gt; DEV["Development rate and hatch timing"]
-  TEMP --&gt; SPAWN["Spawning timing and location"]
-  ICE["Sea ice extent and retreat timing"] --&gt; BLOOM["Spring bloom timing and location"]
-  WIND["Wind, storms, and circulation"] --&gt; TRANS["Egg and larval transport"]
-  WIND --&gt; MIX["Summer mixing and nutrient flux"]
-  SPAWN --&gt; ELDIST["Egg and larval distribution"]
+<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 58, "rankSpacing": 82, "curve": "basis"}, "themeVariables": {"fontSize": "18px", "fontFamily": "Arial, sans-serif"}} }%%
+flowchart TB
+  SSB["Spawning stock&lt;br/&gt;biomass"] --&gt; EG["Egg&lt;br/&gt;abundance"]
+  TEMP["Seasonal&lt;br/&gt;temperature"] --&gt; DEV["Development rate&lt;br/&gt;and hatch timing"]
+  TEMP --&gt; SPAWN["Spawning timing&lt;br/&gt;and location"]
+  ICE["Sea ice extent&lt;br/&gt;and retreat timing"] --&gt; BLOOM["Spring bloom timing&lt;br/&gt;and location"]
+  WIND["Wind, storms,&lt;br/&gt;and circulation"] --&gt; TRANS["Egg and larval&lt;br/&gt;transport"]
+  WIND --&gt; MIX["Summer mixing&lt;br/&gt;and nutrient flux"]
+  SPAWN --&gt; ELDIST["Egg and larval&lt;br/&gt;distribution"]
   EG --&gt; ELDIST
-  DEV --&gt; LARV["Larval duration and growth"]
+  DEV --&gt; LARV["Larval duration&lt;br/&gt;and growth"]
   TRANS --&gt; ELDIST
-  BLOOM --&gt; ZOO["Copepods and euphausiids"]
-  MIX --&gt; PP["Summer primary production"]
+  BLOOM --&gt; ZOO["Copepods and&lt;br/&gt;euphausiids"]
+  MIX --&gt; PP["Summer primary&lt;br/&gt;production"]
   PP --&gt; ZOO
-  ELDIST --&gt; PREYMATCH["Spatial match with prey"]
+  ELDIST --&gt; PREYMATCH["Spatial match&lt;br/&gt;with prey"]
   ZOO --&gt; PREYMATCH
   PREYMATCH --&gt; LARV
-  LARV --&gt; A0SIZE["Age-0 size"]
-  ZOO --&gt; A0DIET["Age-0 diet lipid"]
-  A0DIET --&gt; A0ENERGY["Age-0 energy density and total energy"]
-  A0SIZE --&gt; WINTER["Overwinter survival to age 1"]
+  LARV --&gt; A0SIZE["Age-0&lt;br/&gt;size"]
+  ZOO --&gt; A0DIET["Age-0 diet&lt;br/&gt;lipid"]
+  A0DIET --&gt; A0ENERGY["Age-0 energy density&lt;br/&gt;and total energy"]
+  A0SIZE --&gt; WINTER["Overwinter survival&lt;br/&gt;to age 1"]
   A0ENERGY --&gt; WINTER
-  SST["Late-summer SST and metabolic demand"] --&gt; A0ENERGY
+  SST["Late-summer SST&lt;br/&gt;and metabolic demand"] --&gt; A0ENERGY
   SST --&gt; WINTER
-  ADULT["Adult pollock biomass"] --&gt; CANN["Cannibalism pressure"]
-  COLD["Cold pool area"] --&gt; PREDIST["Predator distribution"]
-  ARROW["Arrowtooth and other predator biomass"] --&gt; PRED["Predation pressure"]
-  ELDIST --&gt; JUVLOC["Age-0 and age-1 distribution"]
-  JUVLOC --&gt; OVERLAP["Juvenile-predator spatial overlap"]
+  ADULT["Adult pollock&lt;br/&gt;biomass"] --&gt; CANN["Cannibalism&lt;br/&gt;pressure"]
+  COLD["Cold pool&lt;br/&gt;area"] --&gt; PREDIST["Predator&lt;br/&gt;distribution"]
+  ARROW["Arrowtooth and other&lt;br/&gt;predator biomass"] --&gt; PRED["Predation&lt;br/&gt;pressure"]
+  ELDIST --&gt; JUVLOC["Age-0 and age-1&lt;br/&gt;distribution"]
+  JUVLOC --&gt; OVERLAP["Juvenile-predator&lt;br/&gt;spatial overlap"]
   PREDIST --&gt; OVERLAP
   CANN --&gt; OVERLAP
-  OVERLAP --&gt; A12SURV["Age-1 and age-2 survival"]
+  OVERLAP --&gt; A12SURV["Age-1 and age-2&lt;br/&gt;survival"]
   PRED --&gt; A12SURV
   WINTER --&gt; A12SURV
-  A12SURV --&gt; AGE3["Age-3 recruitment"]
+  A12SURV --&gt; AGE3["Age-3&lt;br/&gt;recruitment"]
+
+  classDef spawner fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef physical fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef prey fill:#ecf5eb,stroke:#6b8f24,stroke-width:2.4px,color:#1f2933;
+  classDef early fill:#fff3df,stroke:#c68519,stroke-width:2.4px,color:#1f2933;
+  classDef predator fill:#fdf2e8,stroke:#c8523f,stroke-width:2.4px,color:#1f2933;
+  classDef survival fill:#e8f6f2,stroke:#13856f,stroke-width:2.4px,color:#1f2933;
+  class SSB,EG spawner;
+  class TEMP,ICE,WIND,SST,COLD,DEV,SPAWN,TRANS,MIX physical;
+  class BLOOM,PP,ZOO,PREYMATCH,A0DIET prey;
+  class ELDIST,LARV,A0SIZE,A0ENERGY,JUVLOC early;
+  class ADULT,CANN,ARROW,PRED,PREDIST,OVERLAP predator;
+  class WINTER,A12SURV,AGE3 survival;
 </pre>
 </div>
 <p></p></figure><p></p>
+</div>
 </div>
 </div>
 </div>

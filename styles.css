@@ -178,6 +178,14 @@ body {
   stroke-width: 2.1px !important;
 }
 
+.overview-dag .mermaid {
+  min-width: 900px;
+}
+
+.overview-dag .mermaid svg {
+  min-height: 960px;
+}
+
 table {
   background: #fff;
 }
@@ -202,5 +210,9 @@ table {
 
   .dag-panel .mermaid {
     min-width: 760px;
+  }
+
+  .overview-dag .mermaid {
+    min-width: 920px;
   }
 }

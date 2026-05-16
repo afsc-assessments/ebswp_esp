@@ -18,43 +18,59 @@ Temperature, sea ice, stratification, summer wind mixing, and transport matter b
 
 ## Integrated Causal Map
 
+::: {.dag-panel .overview-dag}
 ```{mermaid}
-flowchart LR
-  SSB["Spawning stock biomass"] --> EG["Egg abundance"]
-  TEMP["Seasonal temperature"] --> DEV["Development rate and hatch timing"]
-  TEMP --> SPAWN["Spawning timing and location"]
-  ICE["Sea ice extent and retreat timing"] --> BLOOM["Spring bloom timing and location"]
-  WIND["Wind, storms, and circulation"] --> TRANS["Egg and larval transport"]
-  WIND --> MIX["Summer mixing and nutrient flux"]
-  SPAWN --> ELDIST["Egg and larval distribution"]
+%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 58, "rankSpacing": 82, "curve": "basis"}, "themeVariables": {"fontSize": "18px", "fontFamily": "Arial, sans-serif"}} }%%
+flowchart TB
+  SSB["Spawning stock<br/>biomass"] --> EG["Egg<br/>abundance"]
+  TEMP["Seasonal<br/>temperature"] --> DEV["Development rate<br/>and hatch timing"]
+  TEMP --> SPAWN["Spawning timing<br/>and location"]
+  ICE["Sea ice extent<br/>and retreat timing"] --> BLOOM["Spring bloom timing<br/>and location"]
+  WIND["Wind, storms,<br/>and circulation"] --> TRANS["Egg and larval<br/>transport"]
+  WIND --> MIX["Summer mixing<br/>and nutrient flux"]
+  SPAWN --> ELDIST["Egg and larval<br/>distribution"]
   EG --> ELDIST
-  DEV --> LARV["Larval duration and growth"]
+  DEV --> LARV["Larval duration<br/>and growth"]
   TRANS --> ELDIST
-  BLOOM --> ZOO["Copepods and euphausiids"]
-  MIX --> PP["Summer primary production"]
+  BLOOM --> ZOO["Copepods and<br/>euphausiids"]
+  MIX --> PP["Summer primary<br/>production"]
   PP --> ZOO
-  ELDIST --> PREYMATCH["Spatial match with prey"]
+  ELDIST --> PREYMATCH["Spatial match<br/>with prey"]
   ZOO --> PREYMATCH
   PREYMATCH --> LARV
-  LARV --> A0SIZE["Age-0 size"]
-  ZOO --> A0DIET["Age-0 diet lipid"]
-  A0DIET --> A0ENERGY["Age-0 energy density and total energy"]
-  A0SIZE --> WINTER["Overwinter survival to age 1"]
+  LARV --> A0SIZE["Age-0<br/>size"]
+  ZOO --> A0DIET["Age-0 diet<br/>lipid"]
+  A0DIET --> A0ENERGY["Age-0 energy density<br/>and total energy"]
+  A0SIZE --> WINTER["Overwinter survival<br/>to age 1"]
   A0ENERGY --> WINTER
-  SST["Late-summer SST and metabolic demand"] --> A0ENERGY
+  SST["Late-summer SST<br/>and metabolic demand"] --> A0ENERGY
   SST --> WINTER
-  ADULT["Adult pollock biomass"] --> CANN["Cannibalism pressure"]
-  COLD["Cold pool area"] --> PREDIST["Predator distribution"]
-  ARROW["Arrowtooth and other predator biomass"] --> PRED["Predation pressure"]
-  ELDIST --> JUVLOC["Age-0 and age-1 distribution"]
-  JUVLOC --> OVERLAP["Juvenile-predator spatial overlap"]
+  ADULT["Adult pollock<br/>biomass"] --> CANN["Cannibalism<br/>pressure"]
+  COLD["Cold pool<br/>area"] --> PREDIST["Predator<br/>distribution"]
+  ARROW["Arrowtooth and other<br/>predator biomass"] --> PRED["Predation<br/>pressure"]
+  ELDIST --> JUVLOC["Age-0 and age-1<br/>distribution"]
+  JUVLOC --> OVERLAP["Juvenile-predator<br/>spatial overlap"]
   PREDIST --> OVERLAP
   CANN --> OVERLAP
-  OVERLAP --> A12SURV["Age-1 and age-2 survival"]
+  OVERLAP --> A12SURV["Age-1 and age-2<br/>survival"]
   PRED --> A12SURV
   WINTER --> A12SURV
-  A12SURV --> AGE3["Age-3 recruitment"]
+  A12SURV --> AGE3["Age-3<br/>recruitment"]
+
+  classDef spawner fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef physical fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef prey fill:#ecf5eb,stroke:#6b8f24,stroke-width:2.4px,color:#1f2933;
+  classDef early fill:#fff3df,stroke:#c68519,stroke-width:2.4px,color:#1f2933;
+  classDef predator fill:#fdf2e8,stroke:#c8523f,stroke-width:2.4px,color:#1f2933;
+  classDef survival fill:#e8f6f2,stroke:#13856f,stroke-width:2.4px,color:#1f2933;
+  class SSB,EG spawner;
+  class TEMP,ICE,WIND,SST,COLD,DEV,SPAWN,TRANS,MIX physical;
+  class BLOOM,PP,ZOO,PREYMATCH,A0DIET prey;
+  class ELDIST,LARV,A0SIZE,A0ENERGY,JUVLOC early;
+  class ADULT,CANN,ARROW,PRED,PREDIST,OVERLAP predator;
+  class WINTER,A12SURV,AGE3 survival;
 ```
+:::
 
 ## Site Contents
 

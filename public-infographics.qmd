@@ -7,113 +7,146 @@ toc: false
 ::: {.public-hero}
 ## Why Some Young Pollock Make It
 
-Every year, walleye pollock produce many eggs. A strong year class happens when enough young fish pass through a series of survival gates and are still alive at age 3.
+Most pollock eggs do not become adults. A strong year class happens when enough young fish pass through several survival gates and are still alive at age 3.
+:::
+
+::: {.big-message}
+::: {.message-piece .many}
+**Many**
+
+eggs and larvae
+:::
+
+::: {.message-arrow}
+-> 
+:::
+
+::: {.message-piece .few}
+**Few**
+
+age-3 recruits
+:::
+
+::: {.message-caption}
+Recruitment is a filtering process, not a single event.
+:::
 :::
 
 ## The Survival Story
 
-<div class="public-flow">
-  <div class="public-step spawn">
-    <div class="step-num">1</div>
-    <h3>Adults Spawn</h3>
-    <p>More adults can mean more eggs, but egg numbers are only the start.</p>
-  </div>
-  <div class="public-step drift">
-    <div class="step-num">2</div>
-    <h3>Eggs And Larvae Drift</h3>
-    <p>Winds, currents, temperature, and sea ice influence where young fish go.</p>
-  </div>
-  <div class="public-step food">
-    <div class="step-num">3</div>
-    <h3>Young Fish Find Food</h3>
-    <p>Tiny pollock need enough high-energy prey to grow and build reserves.</p>
-  </div>
-  <div class="public-step winter">
-    <div class="step-num">4</div>
-    <h3>Winter Tests Them</h3>
-    <p>Fish entering winter with more size and energy have a better chance.</p>
-  </div>
-  <div class="public-step predators">
-    <div class="step-num">5</div>
-    <h3>Predators Filter Survivors</h3>
-    <p>After the first winter, survival depends partly on whether young fish overlap with larger predators.</p>
-  </div>
-  <div class="public-step recruits">
-    <div class="step-num">6</div>
-    <h3>Age-3 Recruits</h3>
-    <p>The survivors become large enough to show up clearly in the assessment.</p>
-  </div>
-</div>
+:::: {.public-story}
+::: {.story-node .spawn}
+[1]{.step-num} **Adults Spawn**
+
+More adults can mean more eggs, but egg numbers are only the start.
+:::
+
+::: {.story-node .drift}
+[2]{.step-num} **Young Fish Drift**
+
+Winds, currents, temperature, and sea ice influence where eggs and larvae go.
+:::
+
+::: {.story-node .food}
+[3]{.step-num} **Food Builds The Fuel Tank**
+
+Tiny pollock need high-energy prey to grow and store enough reserves.
+:::
+
+::: {.story-node .winter}
+[4]{.step-num} **Winter Tests The Fuel Tank**
+
+Fish entering winter with more size and energy have a better chance.
+:::
+
+::: {.story-node .predators}
+[5]{.step-num} **Predators Filter Survivors**
+
+After the first winter, survival depends partly on whether young fish overlap with larger predators.
+:::
+
+::: {.story-node .recruits}
+[6]{.step-num} **Age-3 Recruits**
+
+The survivors become large enough to show up clearly in the assessment.
+:::
+::::
 
 ## Two Main Bottlenecks
 
-<div class="bottleneck-grid">
-  <div class="bottleneck-card food-gate">
-    <h3>Food And Energy Gate</h3>
-    <p>Young pollock need a full enough "fuel tank" before winter.</p>
-    <div class="fuel-meter high"></div>
-    <p><strong>Helps survival:</strong> lipid-rich prey, good fall condition, enough summer production.</p>
-    <p><strong>Hurts survival:</strong> poor prey match, low energy stores, warm metabolic demand without enough food.</p>
-  </div>
-  <div class="bottleneck-card pred-gate">
-    <h3>Predator Overlap Gate</h3>
-    <p>Young pollock survive better when they avoid heavy overlap with predators.</p>
-    <div class="overlap-meter">
-      <div class="overlap-circle young">young pollock</div>
-      <div class="overlap-circle predator">predators</div>
-    </div>
-    <p><strong>Helps survival:</strong> separation from adult pollock, arrowtooth flounder, and other predators.</p>
-    <p><strong>Hurts survival:</strong> warm or shifting conditions that place young fish and predators in the same area.</p>
-  </div>
-</div>
+::: {.bottleneck-card .food-gate}
+### Food And Energy Gate
+
+Young pollock need a full enough "fuel tank" before winter.
+
+[]{.fuel-meter .high}
+
+**Helps survival:** lipid-rich prey, good fall condition, enough summer production.
+
+**Hurts survival:** poor prey match, low energy stores, warm metabolic demand without enough food.
+:::
+
+::: {.bottleneck-card .pred-gate}
+### Predator Overlap Gate
+
+Young pollock survive better when they avoid heavy overlap with predators.
+
+[]{.overlap-meter}
+
+**Helps survival:** separation from adult pollock, arrowtooth flounder, and other predators.
+
+**Hurts survival:** warm or shifting conditions that place young fish and predators in the same area.
+:::
 
 ## What Changes From Year To Year
 
-<div class="driver-board">
-  <div class="driver-card ice">
-    <h3>Sea Ice</h3>
-    <p>Changes bloom timing, prey production, and the cold pool.</p>
-  </div>
-  <div class="driver-card wind">
-    <h3>Wind And Mixing</h3>
-    <p>Can deliver nutrients that support summer food production.</p>
-  </div>
-  <div class="driver-card temp">
-    <h3>Temperature</h3>
-    <p>Affects development, metabolism, spawning location, and predator habitat.</p>
-  </div>
-  <div class="driver-card space">
-    <h3>Location</h3>
-    <p>The same number of young fish can have different outcomes depending on where they drift and settle.</p>
-  </div>
-</div>
+::: {.driver-card .ice}
+### Sea Ice
+
+Changes bloom timing, prey production, and the cold pool.
+:::
+
+::: {.driver-card .wind}
+### Wind And Mixing
+
+Can deliver nutrients that support summer food production.
+:::
+
+::: {.driver-card .temp}
+### Temperature
+
+Affects development, metabolism, spawning location, and predator habitat.
+:::
+
+::: {.driver-card .space}
+### Location
+
+The same number of young fish can have different outcomes depending on where they drift and settle.
+:::
 
 ## What We Know And What Would Help
 
-<div class="knowledge-grid">
-  <div class="knowledge-card available">
-    <h3>Data We Already Use</h3>
-    <ul>
-      <li>adult pollock abundance,</li>
-      <li>egg and larval surveys,</li>
-      <li>sea ice, temperature, wind, and cold-pool indicators,</li>
-      <li>zooplankton and diet observations,</li>
-      <li>age-0 fish size and energy in sampled years,</li>
-      <li>predator abundance and spatial overlap,</li>
-      <li>age-3 recruitment from the assessment.</li>
-    </ul>
-  </div>
-  <div class="knowledge-card needed">
-    <h3>Data That Would Help Most</h3>
-    <ul>
-      <li>an annual fall age-0 energy index,</li>
-      <li>better winter survival information,</li>
-      <li>annual maps for age-1 and age-2 fish,</li>
-      <li>predator diet and size-selective mortality by year,</li>
-      <li>a cohort table that follows each year class from eggs to age 3.</li>
-    </ul>
-  </div>
-</div>
+::: {.knowledge-card .available}
+### Data We Already Use
+
+- adult pollock abundance,
+- egg and larval surveys,
+- sea ice, temperature, wind, and cold-pool indicators,
+- zooplankton and diet observations,
+- age-0 fish size and energy in sampled years,
+- predator abundance and spatial overlap,
+- age-3 recruitment from the assessment.
+:::
+
+::: {.knowledge-card .needed}
+### Data That Would Help Most
+
+- an annual fall age-0 energy index,
+- better winter survival information,
+- annual maps for age-1 and age-2 fish,
+- predator diet and size-selective mortality by year,
+- a cohort table that follows each year class from eggs to age 3.
+:::
 
 ## Plain-Language Takeaway
 

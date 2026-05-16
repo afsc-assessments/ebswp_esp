@@ -152,7 +152,8 @@ div.csl-indent {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#dag-a-bottom-up-energy-storage" id="toc-dag-a-bottom-up-energy-storage" class="nav-link active" data-scroll-target="#dag-a-bottom-up-energy-storage">DAG A: Bottom-Up Energy Storage</a></li>
+  <li><a href="#data-availability-and-gaps-by-hypothesis" id="toc-data-availability-and-gaps-by-hypothesis" class="nav-link active" data-scroll-target="#data-availability-and-gaps-by-hypothesis">Data Availability And Gaps By Hypothesis</a></li>
+  <li><a href="#dag-a-bottom-up-energy-storage" id="toc-dag-a-bottom-up-energy-storage" class="nav-link" data-scroll-target="#dag-a-bottom-up-energy-storage">DAG A: Bottom-Up Energy Storage</a></li>
   <li><a href="#dag-b-top-down-predation-and-spatial-overlap" id="toc-dag-b-top-down-predation-and-spatial-overlap" class="nav-link" data-scroll-target="#dag-b-top-down-predation-and-spatial-overlap">DAG B: Top-Down Predation And Spatial Overlap</a></li>
   <li><a href="#dag-c-transport-and-spawning-location-match-mismatch" id="toc-dag-c-transport-and-spawning-location-match-mismatch" class="nav-link" data-scroll-target="#dag-c-transport-and-spawning-location-match-mismatch">DAG C: Transport And Spawning-Location Match-Mismatch</a></li>
   <li><a href="#dag-d-time-indexed-switching-control" id="toc-dag-d-time-indexed-switching-control" class="nav-link" data-scroll-target="#dag-d-time-indexed-switching-control">DAG D: Time-Indexed Switching Control</a></li>
@@ -187,30 +188,83 @@ div.csl-indent {
 
 
 <p>Each DAG is deliberately simpler than the integrated map. The purpose is to define testable alternatives, not to draw every plausible link.</p>
+<section id="data-availability-and-gaps-by-hypothesis" class="level2">
+<h2 class="anchored" data-anchor-id="data-availability-and-gaps-by-hypothesis">Data Availability And Gaps By Hypothesis</h2>
+<p>The DAGs are useful only if each causal path can be tied to observable indicators. The table below separates data that are already available or routinely derivable from data that are partial, missing, or most needed for a recruitment model.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Hypothesis</th>
+<th>Available or routinely derivable data</th>
+<th>Partial, missing, or needed data</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>A. Bottom-up energy storage</strong></td>
+<td>Age-0 length, weight, energy density, percent lipid, and diet composition from BASIS and related sampling; ice retreat, SST, wind mixing, stratification, nutrient, and bloom indicators; copepod/euphausiid observations from zooplankton surveys and targeted studies <span class="citation" data-cites="heintz2013 moss2009 siddon2013 sigler2016">(<a href="#ref-heintz2013" role="doc-biblioref">Heintz et al. 2013</a>; <a href="#ref-moss2009" role="doc-biblioref">Moss et al. 2009</a>; <a href="#ref-siddon2013" role="doc-biblioref">Siddon et al. 2013</a>; <a href="#ref-sigler2016" role="doc-biblioref">Sigler et al. 2016</a>)</span>.</td>
+<td>A consistent annual age-0 total-energy index across warm and cold regimes; spatially matched prey-energy fields at juvenile sampling locations; fall-to-winter condition change and overwinter prey availability. Highest-value product: cohort-year age-0 total energy and diet-lipid index aligned with age-1 and age-3 recruitment.</td>
+</tr>
+<tr class="even">
+<td><strong>B. Top-down predation and spatial overlap</strong></td>
+<td>Adult pollock biomass from assessments and surveys; predator abundance and distribution from shelf surveys; candidate overlap metrics; published predation and spatial-overlap models for adult pollock and arrowtooth flounder <span class="citation" data-cites="mueter2006 spencer2016">(<a href="#ref-mueter2006" role="doc-biblioref">Mueter et al. 2006</a>; <a href="#ref-spencer2016" role="doc-biblioref">Spencer et al. 2016</a>)</span>.</td>
+<td>Annual juvenile age-1 and age-2 spatial distributions with uncertainty; year-specific predator diet, ration, and size-selective mortality estimates; separation of cannibalism from other predator mortality. Highest-value product: annual juvenile-predator overlap indices by predator group and juvenile age.</td>
+</tr>
+<tr class="odd">
+<td><strong>C. Transport and spawning-location match-mismatch</strong></td>
+<td>Egg/larval survey records, adult spawning distribution information, wind and circulation fields, temperature-dependent development rates, and biophysical transport model examples <span class="citation" data-cites="petrik2015 smart2012">(<a href="#ref-petrik2015" role="doc-biblioref">Petrik et al. 2015</a>; <a href="#ref-smart2012" role="doc-biblioref">Smart et al. 2012</a>)</span>.</td>
+<td>Annual spawning-location products with uncertainty; coupled particle-tracking outputs for all candidate years; observed prey and predator fields collocated with modeled larval paths; direct estimates of early-stage mortality versus redistribution. Highest-value product: cohort-specific larval delivery index to prey-rich and predator-safe nursery habitat.</td>
+</tr>
+<tr class="even">
+<td><strong>D. Time-indexed switching control</strong></td>
+<td>Time series for recruitment, SSB, adult biomass, broad climate state, ice/SST, predator biomass, and some prey and juvenile indicators; published evidence that bottom-up and top-down controls interact <span class="citation" data-cites="mueter2006 mueter2011 sigler2016">(<a href="#ref-mueter2006" role="doc-biblioref">Mueter et al. 2006</a>, <a href="#ref-mueter2011" role="doc-biblioref">2011</a>; <a href="#ref-sigler2016" role="doc-biblioref">Sigler et al. 2016</a>)</span>.</td>
+<td>Long, consistent time series for age-0 condition, age-1/age-2 survival, predator overlap, and prey production on the same cohort calendar; sufficient contrast across consecutive climate states; explicit uncertainty propagation across lagged links. Highest-value product: cohort table with synchronized annual covariates from spawning year through age 3.</td>
+</tr>
+</tbody>
+</table>
+<p>Across all alternatives, the largest gap is not a complete absence of observations. It is inconsistent annual coverage across the full cohort pathway: eggs and larvae, fall age-0 condition, overwinter survival to age 1, age-1 and age-2 spatial overlap with predators, and final age-3 recruitment are rarely observed as one linked cohort record.</p>
+</section>
 <section id="dag-a-bottom-up-energy-storage" class="level2">
 <h2 class="anchored" data-anchor-id="dag-a-bottom-up-energy-storage">DAG A: Bottom-Up Energy Storage</h2>
 <p><strong>Main claim:</strong> recruitment is set primarily by whether seasonal production creates lipid-rich prey and age-0 fish accumulate enough total energy before winter <span class="citation" data-cites="heintz2013 siddon2013 sigler2016">(<a href="#ref-heintz2013" role="doc-biblioref">Heintz et al. 2013</a>; <a href="#ref-siddon2013" role="doc-biblioref">Siddon et al. 2013</a>; <a href="#ref-sigler2016" role="doc-biblioref">Sigler et al. 2016</a>)</span>.</p>
+<div class="dag-panel">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  ICE["Ice retreat timing"] --&gt; BLOOM["Bloom timing and location"]
-  WIND["Summer storms and wind mixing"] --&gt; NUT["Surface nutrient flux"]
-  NUT --&gt; PP["Summer primary production"]
-  BLOOM --&gt; LZOO["Large copepods and euphausiids"]
+<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 60, "rankSpacing": 80, "curve": "basis"}, "themeVariables": {"fontSize": "18px", "fontFamily": "Arial, sans-serif"}} }%%
+flowchart TB
+  ICE["Ice retreat&lt;br/&gt;timing"] --&gt; BLOOM["Bloom timing&lt;br/&gt;and location"]
+  WIND["Summer storms&lt;br/&gt;and wind mixing"] --&gt; NUT["Surface nutrient&lt;br/&gt;flux"]
+  NUT --&gt; PP["Summer primary&lt;br/&gt;production"]
+  BLOOM --&gt; LZOO["Large copepods&lt;br/&gt;and euphausiids"]
   PP --&gt; LZOO
-  LZOO --&gt; DIET["Age-0 diet lipid"]
-  DIET --&gt; ED["Age-0 energy density"]
-  GROW["Age-0 growth and size"] --&gt; TE["Age-0 total energy"]
+  LZOO --&gt; DIET["Age-0 diet&lt;br/&gt;lipid"]
+  DIET --&gt; ED["Age-0 energy&lt;br/&gt;density"]
+  GROW["Age-0 growth&lt;br/&gt;and size"] --&gt; TE["Age-0 total&lt;br/&gt;energy"]
   ED --&gt; TE
-  TE --&gt; WINS["Winter survival to age 1"]
-  WINS --&gt; A12["Age-1 and age-2 abundance"]
-  A12 --&gt; R3["Age-3 recruitment"]
+  TE --&gt; WINS["Winter survival&lt;br/&gt;to age 1"]
+  WINS --&gt; A12["Age-1 and age-2&lt;br/&gt;abundance"]
+  A12 --&gt; R3["Age-3&lt;br/&gt;recruitment"]
+
+  classDef forcing fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef production fill:#ecf5eb,stroke:#6b8f24,stroke-width:2.4px,color:#1f2933;
+  classDef condition fill:#fff3df,stroke:#c68519,stroke-width:2.4px,color:#1f2933;
+  classDef survival fill:#e8f6f2,stroke:#13856f,stroke-width:2.4px,color:#1f2933;
+  class ICE,WIND,NUT forcing;
+  class BLOOM,PP,LZOO,DIET production;
+  class GROW,ED,TE condition;
+  class WINS,A12,R3 survival;
 </pre>
 </div>
 <p></p></figure><p></p>
+</div>
 </div>
 </div>
 </div>
@@ -224,28 +278,40 @@ div.csl-indent {
 <section id="dag-b-top-down-predation-and-spatial-overlap" class="level2">
 <h2 class="anchored" data-anchor-id="dag-b-top-down-predation-and-spatial-overlap">DAG B: Top-Down Predation And Spatial Overlap</h2>
 <p><strong>Main claim:</strong> recruitment is set primarily by whether juveniles overlap spatially with adult pollock, arrowtooth flounder, and other predators during age-0 to age-2 <span class="citation" data-cites="mueter2006 spencer2016">(<a href="#ref-mueter2006" role="doc-biblioref">Mueter et al. 2006</a>; <a href="#ref-spencer2016" role="doc-biblioref">Spencer et al. 2016</a>)</span>.</p>
+<div class="dag-panel">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  ADULT["Adult pollock biomass"] --&gt; CANN["Cannibalism pressure"]
-  ARROW["Arrowtooth biomass"] --&gt; ATP["Arrowtooth predation pressure"]
-  COLD["Cold pool extent"] --&gt; ATDIST["Arrowtooth distribution"]
+<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 58, "rankSpacing": 78, "curve": "basis"}, "themeVariables": {"fontSize": "18px", "fontFamily": "Arial, sans-serif"}} }%%
+flowchart TB
+  ADULT["Adult pollock&lt;br/&gt;biomass"] --&gt; CANN["Cannibalism&lt;br/&gt;pressure"]
+  ARROW["Arrowtooth&lt;br/&gt;biomass"] --&gt; ATP["Arrowtooth predation&lt;br/&gt;pressure"]
+  COLD["Cold pool&lt;br/&gt;extent"] --&gt; ATDIST["Arrowtooth&lt;br/&gt;distribution"]
   TEMP["Temperature"] --&gt; ATDIST
-  TRAN["Larval transport and juvenile distribution"] --&gt; JLOC["Juvenile location"]
-  SPAWN["Spawning location"] --&gt; JLOC
-  ATDIST --&gt; OVER["Juvenile-predator overlap"]
+  TRAN["Larval transport&lt;br/&gt;and juvenile distribution"] --&gt; JLOC["Juvenile&lt;br/&gt;location"]
+  SPAWN["Spawning&lt;br/&gt;location"] --&gt; JLOC
+  ATDIST --&gt; OVER["Juvenile-predator&lt;br/&gt;overlap"]
   JLOC --&gt; OVER
   CANN --&gt; OVER
-  ATP --&gt; MORT["Age-1 and age-2 mortality"]
+  ATP --&gt; MORT["Age-1 and age-2&lt;br/&gt;mortality"]
   OVER --&gt; MORT
-  MORT --&gt; SURV["Survival to age 3"]
-  SURV --&gt; R3["Age-3 recruitment"]
+  MORT --&gt; SURV["Survival&lt;br/&gt;to age 3"]
+  SURV --&gt; R3["Age-3&lt;br/&gt;recruitment"]
+
+  classDef predator fill:#fdf2e8,stroke:#c8523f,stroke-width:2.4px,color:#1f2933;
+  classDef physical fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef distribution fill:#ecf5eb,stroke:#6b8f24,stroke-width:2.4px,color:#1f2933;
+  classDef survival fill:#e8f6f2,stroke:#13856f,stroke-width:2.4px,color:#1f2933;
+  class ADULT,CANN,ARROW,ATP predator;
+  class COLD,TEMP,TRAN,SPAWN physical;
+  class ATDIST,JLOC,OVER distribution;
+  class MORT,SURV,R3 survival;
 </pre>
 </div>
 <p></p></figure><p></p>
+</div>
 </div>
 </div>
 </div>
@@ -259,29 +325,41 @@ div.csl-indent {
 <section id="dag-c-transport-and-spawning-location-match-mismatch" class="level2">
 <h2 class="anchored" data-anchor-id="dag-c-transport-and-spawning-location-match-mismatch">DAG C: Transport And Spawning-Location Match-Mismatch</h2>
 <p><strong>Main claim:</strong> early distribution, set by adult spawning location and transport, controls whether larvae and juveniles encounter prey, nursery habitat, and predators <span class="citation" data-cites="petrik2015 smart2012">(<a href="#ref-petrik2015" role="doc-biblioref">Petrik et al. 2015</a>; <a href="#ref-smart2012" role="doc-biblioref">Smart et al. 2012</a>)</span>.</p>
+<div class="dag-panel">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  TEMP["Temperature"] --&gt; SPAT["Spawning time"]
-  TEMP --&gt; SPAL["Spawning location"]
-  WIND["Wind forcing"] --&gt; CURR["Cross-shelf and along-shelf transport"]
-  SPAT --&gt; INIT["Initial egg distribution"]
+<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 58, "rankSpacing": 78, "curve": "basis"}, "themeVariables": {"fontSize": "18px", "fontFamily": "Arial, sans-serif"}} }%%
+flowchart TB
+  TEMP["Temperature"] --&gt; SPAT["Spawning&lt;br/&gt;time"]
+  TEMP --&gt; SPAL["Spawning&lt;br/&gt;location"]
+  WIND["Wind&lt;br/&gt;forcing"] --&gt; CURR["Cross-shelf and&lt;br/&gt;along-shelf transport"]
+  SPAT --&gt; INIT["Initial egg&lt;br/&gt;distribution"]
   SPAL --&gt; INIT
-  INIT --&gt; ELD["Egg-larval distribution"]
+  INIT --&gt; ELD["Egg-larval&lt;br/&gt;distribution"]
   CURR --&gt; ELD
-  ELD --&gt; PREY["Spatial match with copepod prey"]
-  ELD --&gt; SAFE["Spatial separation from adult predators"]
-  PREY --&gt; LGROW["Larval growth"]
-  SAFE --&gt; LMORT["Lower larval and juvenile mortality"]
-  LGROW --&gt; A0["Age-0 abundance and size"]
+  ELD --&gt; PREY["Spatial match&lt;br/&gt;with copepod prey"]
+  ELD --&gt; SAFE["Spatial separation&lt;br/&gt;from adult predators"]
+  PREY --&gt; LGROW["Larval&lt;br/&gt;growth"]
+  SAFE --&gt; LMORT["Lower larval and&lt;br/&gt;juvenile mortality"]
+  LGROW --&gt; A0["Age-0 abundance&lt;br/&gt;and size"]
   LMORT --&gt; A0
-  A0 --&gt; R3["Age-3 recruitment"]
+  A0 --&gt; R3["Age-3&lt;br/&gt;recruitment"]
+
+  classDef physical fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef distribution fill:#ecf5eb,stroke:#6b8f24,stroke-width:2.4px,color:#1f2933;
+  classDef match fill:#fff3df,stroke:#c68519,stroke-width:2.4px,color:#1f2933;
+  classDef survival fill:#e8f6f2,stroke:#13856f,stroke-width:2.4px,color:#1f2933;
+  class TEMP,WIND,CURR,SPAT,SPAL physical;
+  class INIT,ELD distribution;
+  class PREY,SAFE,LGROW,LMORT match;
+  class A0,R3 survival;
 </pre>
 </div>
 <p></p></figure><p></p>
+</div>
 </div>
 </div>
 </div>
@@ -295,23 +373,35 @@ div.csl-indent {
 <section id="dag-d-time-indexed-switching-control" class="level2">
 <h2 class="anchored" data-anchor-id="dag-d-time-indexed-switching-control">DAG D: Time-Indexed Switching Control</h2>
 <p><strong>Main claim:</strong> climate state changes which control dominates. Bottom-up control dominates when prey limits juvenile condition; top-down control becomes stronger after productive years increase predator or adult pollock biomass <span class="citation" data-cites="mueter2006 sigler2016">(<a href="#ref-mueter2006" role="doc-biblioref">Mueter et al. 2006</a>; <a href="#ref-sigler2016" role="doc-biblioref">Sigler et al. 2016</a>)</span>.</p>
+<div class="dag-panel">
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-  CLIM["Climate state in year t"] --&gt; ICE["Ice retreat and SST in year t"]
-  ICE --&gt; PREY["Prey field for cohort t"]
-  PREY --&gt; COND["Age-0 condition for cohort t"]
-  COND --&gt; AGE1["Age-1 abundance of cohort t+1"]
-  PCOHORT["Prior cohort strength t-1"] --&gt; PREDAD["Adult and juvenile predator field t+1"]
-  AGE1 --&gt; OVER["Predator-prey overlap t+1 to t+2"]
+<pre class="mermaid mermaid-js">%%{init: {"flowchart": {"htmlLabels": true, "nodeSpacing": 60, "rankSpacing": 82, "curve": "basis"}, "themeVariables": {"fontSize": "18px", "fontFamily": "Arial, sans-serif"}} }%%
+flowchart TB
+  CLIM["Climate state&lt;br/&gt;in year t"] --&gt; ICE["Ice retreat and SST&lt;br/&gt;in year t"]
+  ICE --&gt; PREY["Prey field&lt;br/&gt;for cohort t"]
+  PREY --&gt; COND["Age-0 condition&lt;br/&gt;for cohort t"]
+  COND --&gt; AGE1["Age-1 abundance&lt;br/&gt;of cohort t+1"]
+  PCOHORT["Prior cohort&lt;br/&gt;strength t-1"] --&gt; PREDAD["Adult and juvenile&lt;br/&gt;predator field t+1"]
+  AGE1 --&gt; OVER["Predator-prey overlap&lt;br/&gt;t+1 to t+2"]
   PREDAD --&gt; OVER
-  OVER --&gt; AGE3["Age-3 recruitment of cohort t+3"]
+  OVER --&gt; AGE3["Age-3 recruitment&lt;br/&gt;of cohort t+3"]
+
+  classDef climate fill:#e8f2f7,stroke:#26739b,stroke-width:2.4px,color:#1f2933;
+  classDef bottomup fill:#ecf5eb,stroke:#6b8f24,stroke-width:2.4px,color:#1f2933;
+  classDef topdown fill:#fdf2e8,stroke:#c8523f,stroke-width:2.4px,color:#1f2933;
+  classDef survival fill:#e8f6f2,stroke:#13856f,stroke-width:2.4px,color:#1f2933;
+  class CLIM,ICE climate;
+  class PREY,COND bottomup;
+  class PCOHORT,PREDAD,OVER topdown;
+  class AGE1,AGE3 survival;
 </pre>
 </div>
 <p></p></figure><p></p>
+</div>
 </div>
 </div>
 </div>
@@ -329,6 +419,12 @@ div.csl-indent {
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-heintz2013" class="csl-entry" role="listitem">
 Heintz, Ron A., Elizabeth C. Siddon, Edward V. Farley, and Jeffrey M. Napp. 2013. <span>“Correlation Between Recruitment and Fall Condition of Age-0 Pollock (<span class="nocase">Theragra chalcogramma</span>) from the Eastern Bering Sea Under Varying Climate Conditions.”</span> <em>Deep-Sea Research Part II: Topical Studies in Oceanography</em> 94: 150–56. <a href="https://doi.org/10.1016/j.dsr2.2013.04.006">https://doi.org/10.1016/j.dsr2.2013.04.006</a>.
+</div>
+<div id="ref-moss2009" class="csl-entry" role="listitem">
+Moss, Jamal H., Edward V. Farley, Angela M. Feldmann, and James N. Ianelli. 2009. <span>“Spatial Distribution, Energetic Status, and Food Habits of Eastern Bering Sea Age-0 Walleye Pollock.”</span> <em>Transactions of the American Fisheries Society</em> 138 (3): 497–505. <a href="https://doi.org/10.1577/T08-126.1">https://doi.org/10.1577/T08-126.1</a>.
+</div>
+<div id="ref-mueter2011" class="csl-entry" role="listitem">
+Mueter, Franz J., Nicholas A. Bond, James N. Ianelli, and Anne B. Hollowed. 2011. <span>“Expected Declines in Recruitment of Walleye Pollock (<span class="nocase">Theragra chalcogramma</span>) in the Eastern Bering Sea Under Future Climate Change.”</span> <em>ICES Journal of Marine Science</em>, ahead of print. <a href="https://doi.org/10.1093/icesjms/fsr022">https://doi.org/10.1093/icesjms/fsr022</a>.
 </div>
 <div id="ref-mueter2006" class="csl-entry" role="listitem">
 Mueter, Franz J., Carol Ladd, Michael C. Palmer, and Brenda L. Norcross. 2006. <span>“Bottom-up and Top-down Controls of Walleye Pollock (<span class="nocase">Theragra chalcogramma</span>) on the Eastern Bering Sea Shelf.”</span> <em>Progress in Oceanography</em> 68 (2–4): 152–83. <a href="https://doi.org/10.1016/j.pocean.2006.02.012">https://doi.org/10.1016/j.pocean.2006.02.012</a>.

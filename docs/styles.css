@@ -129,6 +129,55 @@ body {
   background: var(--slate);
 }
 
+.dag-panel {
+  margin: 1.25rem 0 1.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  overflow-x: auto;
+}
+
+.dag-panel .cell {
+  margin-bottom: 0;
+}
+
+.dag-panel .mermaid {
+  min-width: 720px;
+  display: flex;
+  justify-content: center;
+}
+
+.dag-panel .mermaid svg {
+  max-width: none !important;
+  width: 100%;
+  min-height: 620px;
+}
+
+.dag-panel .mermaid .nodeLabel,
+.dag-panel .mermaid text {
+  font-size: 18px !important;
+  line-height: 1.25;
+  font-weight: 650;
+}
+
+.dag-panel .mermaid .edgeLabel,
+.dag-panel .mermaid .edgeLabel span {
+  font-size: 15px !important;
+  color: var(--muted) !important;
+}
+
+.dag-panel .mermaid .node rect,
+.dag-panel .mermaid .node polygon,
+.dag-panel .mermaid .node ellipse {
+  stroke-width: 2.4px !important;
+  filter: drop-shadow(0 2px 4px rgba(31, 41, 51, 0.12));
+}
+
+.dag-panel .mermaid .edgePath .path {
+  stroke-width: 2.1px !important;
+}
+
 table {
   background: #fff;
 }
@@ -145,5 +194,13 @@ table {
   .alt-grid,
   .evidence-grid {
     grid-template-columns: 1fr;
+  }
+
+  .dag-panel {
+    padding: 0.65rem;
+  }
+
+  .dag-panel .mermaid {
+    min-width: 760px;
   }
 }

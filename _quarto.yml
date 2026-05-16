@@ -44,6 +44,7 @@ format:
     link-external-newwindow: true
     citations-hover: true
     footnotes-hover: true
+    lightbox: true
 
 execute:
   freeze: auto

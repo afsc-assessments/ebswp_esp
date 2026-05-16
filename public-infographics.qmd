@@ -1,6 +1,6 @@
 ---
-title: "Public Infographics"
-description: "Plain-language infographics for communicating pollock early survival pathways."
+title: "Simple summary"
+description: "Simple infographics for communicating pollock early survival pathways."
 toc: false
 ---
 

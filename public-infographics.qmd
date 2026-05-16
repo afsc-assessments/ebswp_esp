@@ -1,0 +1,122 @@
+---
+title: "Public Infographics"
+description: "Plain-language infographics for communicating pollock early survival pathways."
+toc: false
+---
+
+::: {.public-hero}
+## Why Some Young Pollock Make It
+
+Every year, walleye pollock produce many eggs. A strong year class happens when enough young fish pass through a series of survival gates and are still alive at age 3.
+:::
+
+## The Survival Story
+
+<div class="public-flow">
+  <div class="public-step spawn">
+    <div class="step-num">1</div>
+    <h3>Adults Spawn</h3>
+    <p>More adults can mean more eggs, but egg numbers are only the start.</p>
+  </div>
+  <div class="public-step drift">
+    <div class="step-num">2</div>
+    <h3>Eggs And Larvae Drift</h3>
+    <p>Winds, currents, temperature, and sea ice influence where young fish go.</p>
+  </div>
+  <div class="public-step food">
+    <div class="step-num">3</div>
+    <h3>Young Fish Find Food</h3>
+    <p>Tiny pollock need enough high-energy prey to grow and build reserves.</p>
+  </div>
+  <div class="public-step winter">
+    <div class="step-num">4</div>
+    <h3>Winter Tests Them</h3>
+    <p>Fish entering winter with more size and energy have a better chance.</p>
+  </div>
+  <div class="public-step predators">
+    <div class="step-num">5</div>
+    <h3>Predators Filter Survivors</h3>
+    <p>After the first winter, survival depends partly on whether young fish overlap with larger predators.</p>
+  </div>
+  <div class="public-step recruits">
+    <div class="step-num">6</div>
+    <h3>Age-3 Recruits</h3>
+    <p>The survivors become large enough to show up clearly in the assessment.</p>
+  </div>
+</div>
+
+## Two Main Bottlenecks
+
+<div class="bottleneck-grid">
+  <div class="bottleneck-card food-gate">
+    <h3>Food And Energy Gate</h3>
+    <p>Young pollock need a full enough "fuel tank" before winter.</p>
+    <div class="fuel-meter high"></div>
+    <p><strong>Helps survival:</strong> lipid-rich prey, good fall condition, enough summer production.</p>
+    <p><strong>Hurts survival:</strong> poor prey match, low energy stores, warm metabolic demand without enough food.</p>
+  </div>
+  <div class="bottleneck-card pred-gate">
+    <h3>Predator Overlap Gate</h3>
+    <p>Young pollock survive better when they avoid heavy overlap with predators.</p>
+    <div class="overlap-meter">
+      <div class="overlap-circle young">young pollock</div>
+      <div class="overlap-circle predator">predators</div>
+    </div>
+    <p><strong>Helps survival:</strong> separation from adult pollock, arrowtooth flounder, and other predators.</p>
+    <p><strong>Hurts survival:</strong> warm or shifting conditions that place young fish and predators in the same area.</p>
+  </div>
+</div>
+
+## What Changes From Year To Year
+
+<div class="driver-board">
+  <div class="driver-card ice">
+    <h3>Sea Ice</h3>
+    <p>Changes bloom timing, prey production, and the cold pool.</p>
+  </div>
+  <div class="driver-card wind">
+    <h3>Wind And Mixing</h3>
+    <p>Can deliver nutrients that support summer food production.</p>
+  </div>
+  <div class="driver-card temp">
+    <h3>Temperature</h3>
+    <p>Affects development, metabolism, spawning location, and predator habitat.</p>
+  </div>
+  <div class="driver-card space">
+    <h3>Location</h3>
+    <p>The same number of young fish can have different outcomes depending on where they drift and settle.</p>
+  </div>
+</div>
+
+## What We Know And What Would Help
+
+<div class="knowledge-grid">
+  <div class="knowledge-card available">
+    <h3>Data We Already Use</h3>
+    <ul>
+      <li>adult pollock abundance,</li>
+      <li>egg and larval surveys,</li>
+      <li>sea ice, temperature, wind, and cold-pool indicators,</li>
+      <li>zooplankton and diet observations,</li>
+      <li>age-0 fish size and energy in sampled years,</li>
+      <li>predator abundance and spatial overlap,</li>
+      <li>age-3 recruitment from the assessment.</li>
+    </ul>
+  </div>
+  <div class="knowledge-card needed">
+    <h3>Data That Would Help Most</h3>
+    <ul>
+      <li>an annual fall age-0 energy index,</li>
+      <li>better winter survival information,</li>
+      <li>annual maps for age-1 and age-2 fish,</li>
+      <li>predator diet and size-selective mortality by year,</li>
+      <li>a cohort table that follows each year class from eggs to age 3.</li>
+    </ul>
+  </div>
+</div>
+
+## Plain-Language Takeaway
+
+::: {.takeaway-band}
+Strong recruitment is not caused by one simple switch. It is most likely when young pollock are delivered to the right places, find enough high-energy food before winter, and avoid intense predator overlap after the first winter [@heintz2013; @mueter2006; @petrik2015; @spencer2016].
+:::

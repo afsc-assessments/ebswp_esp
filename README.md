@@ -10,6 +10,7 @@ larvae through age-0, age-1, and age-2 fish reaching age 3. It includes:
 - stage-specific evidence synthesis,
 - directed acyclic graph alternatives,
 - science-audience infographics,
+- public-facing plain-language infographics,
 - citation-linked references.
 
 Render locally with:

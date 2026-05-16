@@ -6,6 +6,7 @@ project:
     - evidence.qmd
     - dags.qmd
     - infographics.qmd
+    - public-infographics.qmd
     - references.qmd
 
 website:
@@ -23,6 +24,8 @@ website:
         text: DAGs
       - href: infographics.qmd
         text: Infographics
+      - href: public-infographics.qmd
+        text: Public Infographics
       - href: references.qmd
         text: References
   page-footer:

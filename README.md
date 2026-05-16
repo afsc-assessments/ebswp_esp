@@ -1,0 +1,21 @@
+# ebswp_esp
+
+
+Quarto website for eastern Bering Sea walleye pollock early survival
+pathways.
+
+The site synthesizes causal hypotheses affecting survival from eggs and
+larvae through age-0, age-1, and age-2 fish reaching age 3. It includes:
+
+- stage-specific evidence synthesis,
+- directed acyclic graph alternatives,
+- science-audience infographics,
+- citation-linked references.
+
+Render locally with:
+
+``` bash
+quarto render
+```
+
+The rendered site is written to `docs/` for GitHub Pages.

@@ -133,11 +133,11 @@
     "text": "Site Contents\n\nEvidence: stage-specific synthesis and candidate indicators.\nDAGs: alternative directed acyclic graphs for competing hypotheses.\nInfographics: compact visual summaries for a science audience.\nReferences: cited references with DOI and source links."
   },
   {
-    "objectID": "index.html#practical-model",
-    "href": "index.html#practical-model",
+    "objectID": "index.html#practical-models",
+    "href": "index.html#practical-models",
     "title": "Eastern Bering Sea Walleye Pollock Early Survival Pathways",
-    "section": "Practical Model",
-    "text": "Practical Model\nThe minimum useful causal model is:\nAge3_recruitment =\n  f(spawner output,\n    age0 energy condition,\n    age1-age2 predator overlap,\n    cohort density,\n    observation/assessment uncertainty)\nIn that model, age-0 condition is a mediator of ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap is a mediator of cold pool area, predator biomass, juvenile distribution, and adult pollock biomass."
+    "section": "Practical Models",
+    "text": "Practical Models\nA practical model does not need to include every process in the causal map. It should preserve the main stage structure: spawner output sets the starting cohort size, age-0 condition filters overwinter survival, and age-1 to age-2 predator overlap filters survival to age 3.\nThe models below are useful as a progression from a minimum assessment-linked model to a fuller causal model.\n\n\n\n\n\n\n\n\nModel\nForm\nBest use\n\n\n\n\n1. Baseline stock-recruit model\nAge3_recruitment = f(spawner output, cohort density, assessment uncertainty)\nEstablishes the baseline recruitment expectation and residual pattern before adding environmental or ecological covariates.\n\n\n2. Age-0 condition model\nAge3_recruitment = f(spawner output, age0 total energy or energy density, cohort density, uncertainty)\nTests whether fall juvenile size, lipid, or total energy explains later recruitment after accounting for spawner output. This is the most direct practical expression of the age-0 energy gate.\n\n\n3. Predator-overlap model\nAge3_recruitment = f(spawner output, juvenile-predator overlap, adult pollock biomass, predator biomass, uncertainty)\nTests whether survival from age 1 to age 3 is limited by cannibalism or other predators. Adult pollock biomass and arrowtooth flounder distribution are treated as drivers of spatially explicit predation risk.\n\n\n4. Transport and nursery-delivery model\nAge3_recruitment = f(spawner output, spawning location, larval transport, prey match, early survival, uncertainty)\nTests whether cohorts succeed because eggs and larvae are delivered to prey-rich and predator-safe nursery habitat. This model is most useful when particle tracking, egg/larval surveys, or spawning-location products are available.\n\n\n5. Integrated gate model\nAge3_recruitment = f(spawner output, age0 condition, age1-age2 predator overlap, cohort density, uncertainty)\nCombines the two best-supported survival gates. Age-0 condition mediates ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap mediates cold pool area, predator biomass, juvenile distribution, and adult pollock biomass.\n\n\n\nFor annual prediction, model 5 is the minimum useful causal model. For diagnosis, models 2 through 4 should also be fit separately so that a strong condition signal is not hidden by a predation signal, or vice versa. The transport model is especially useful as a bridge between climate forcing and the two survival gates because it determines where larvae and juveniles encounter prey and predators."
   },
   {
     "objectID": "dags.html",
@@ -184,49 +184,49 @@
   {
     "objectID": "public-infographics.html",
     "href": "public-infographics.html",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "",
     "text": "Most pollock eggs do not become adults. A strong year class happens when enough young fish pass through several survival gates and are still alive at age 3."
   },
   {
     "objectID": "public-infographics.html#why-some-young-pollock-make-it",
     "href": "public-infographics.html#why-some-young-pollock-make-it",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "",
     "text": "Most pollock eggs do not become adults. A strong year class happens when enough young fish pass through several survival gates and are still alive at age 3."
   },
   {
     "objectID": "public-infographics.html#the-survival-story",
     "href": "public-infographics.html#the-survival-story",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "The Survival Story",
     "text": "The Survival Story\n\n\n1 Adults Spawn\nMore adults can mean more eggs, but egg numbers are only the start.\n\n\n2 Young Fish Drift\nWinds, currents, temperature, and sea ice influence where eggs and larvae go.\n\n\n3 Food Builds The Fuel Tank\nTiny pollock need high-energy prey to grow and store enough reserves.\n\n\n4 Winter Tests The Fuel Tank\nFish entering winter with more size and energy have a better chance.\n\n\n5 Predators Filter Survivors\nAfter the first winter, survival depends partly on whether young fish overlap with larger predators.\n\n\n6 Age-3 Recruits\nThe survivors become large enough to show up clearly in the assessment."
   },
   {
     "objectID": "public-infographics.html#two-main-bottlenecks",
     "href": "public-infographics.html#two-main-bottlenecks",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "Two Main Bottlenecks",
     "text": "Two Main Bottlenecks\n\nFood And Energy Gate\nYoung pollock need a full enough “fuel tank” before winter.\n\nHelps survival: lipid-rich prey, good fall condition, enough summer production.\nHurts survival: poor prey match, low energy stores, warm metabolic demand without enough food.\n\n\nPredator Overlap Gate\nYoung pollock survive better when they avoid heavy overlap with predators.\n\nHelps survival: separation from adult pollock, arrowtooth flounder, and other predators.\nHurts survival: warm or shifting conditions that place young fish and predators in the same area."
   },
   {
     "objectID": "public-infographics.html#what-changes-from-year-to-year",
     "href": "public-infographics.html#what-changes-from-year-to-year",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "What Changes From Year To Year",
     "text": "What Changes From Year To Year\n\nSea Ice\nChanges bloom timing, prey production, and the cold pool.\n\n\nWind And Mixing\nCan deliver nutrients that support summer food production.\n\n\nTemperature\nAffects development, metabolism, spawning location, and predator habitat.\n\n\nLocation\nThe same number of young fish can have different outcomes depending on where they drift and settle."
   },
   {
     "objectID": "public-infographics.html#what-we-know-and-what-would-help",
     "href": "public-infographics.html#what-we-know-and-what-would-help",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "What We Know And What Would Help",
     "text": "What We Know And What Would Help\n\nData We Already Use\n\nadult pollock abundance,\negg and larval surveys,\nsea ice, temperature, wind, and cold-pool indicators,\nzooplankton and diet observations,\nage-0 fish size and energy in sampled years,\npredator abundance and spatial overlap,\nage-3 recruitment from the assessment.\n\n\n\nData That Would Help Most\n\nan annual fall age-0 energy index,\nbetter winter survival information,\nannual maps for age-1 and age-2 fish,\npredator diet and size-selective mortality by year,\na cohort table that follows each year class from eggs to age 3."
   },
   {
     "objectID": "public-infographics.html#plain-language-takeaway",
     "href": "public-infographics.html#plain-language-takeaway",
-    "title": "Public Infographics",
+    "title": "Simple summary",
     "section": "Plain-Language Takeaway",
     "text": "Plain-Language Takeaway\n\nStrong recruitment is not caused by one simple switch. It is most likely when young pollock are delivered to the right places, find enough high-energy food before winter, and avoid intense predator overlap after the first winter (Heintz et al. 2013; Mueter et al. 2006; Petrik et al. 2015; Spencer et al. 2016)."
   }

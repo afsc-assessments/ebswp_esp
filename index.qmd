@@ -79,17 +79,18 @@ flowchart TB
 - [Infographics](infographics.qmd): compact visual summaries for a science audience.
 - [References](references.qmd): cited references with DOI and source links.
 
-## Practical Model
+## Practical Models
 
-The minimum useful causal model is:
+A practical model does not need to include every process in the causal map. It should preserve the main stage structure: spawner output sets the starting cohort size, age-0 condition filters overwinter survival, and age-1 to age-2 predator overlap filters survival to age 3.
 
-```text
-Age3_recruitment =
-  f(spawner output,
-    age0 energy condition,
-    age1-age2 predator overlap,
-    cohort density,
-    observation/assessment uncertainty)
-```
+The models below are useful as a progression from a minimum assessment-linked model to a fuller causal model.
 
-In that model, age-0 condition is a mediator of ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap is a mediator of cold pool area, predator biomass, juvenile distribution, and adult pollock biomass.
+| Model | Form | Best use |
+|---|---|---|
+| **1. Baseline stock-recruit model** | `Age3_recruitment = f(spawner output, cohort density, assessment uncertainty)` | Establishes the baseline recruitment expectation and residual pattern before adding environmental or ecological covariates. |
+| **2. Age-0 condition model** | `Age3_recruitment = f(spawner output, age0 total energy or energy density, cohort density, uncertainty)` | Tests whether fall juvenile size, lipid, or total energy explains later recruitment after accounting for spawner output. This is the most direct practical expression of the age-0 energy gate. |
+| **3. Predator-overlap model** | `Age3_recruitment = f(spawner output, juvenile-predator overlap, adult pollock biomass, predator biomass, uncertainty)` | Tests whether survival from age 1 to age 3 is limited by cannibalism or other predators. Adult pollock biomass and arrowtooth flounder distribution are treated as drivers of spatially explicit predation risk. |
+| **4. Transport and nursery-delivery model** | `Age3_recruitment = f(spawner output, spawning location, larval transport, prey match, early survival, uncertainty)` | Tests whether cohorts succeed because eggs and larvae are delivered to prey-rich and predator-safe nursery habitat. This model is most useful when particle tracking, egg/larval surveys, or spawning-location products are available. |
+| **5. Integrated gate model** | `Age3_recruitment = f(spawner output, age0 condition, age1-age2 predator overlap, cohort density, uncertainty)` | Combines the two best-supported survival gates. Age-0 condition mediates ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap mediates cold pool area, predator biomass, juvenile distribution, and adult pollock biomass. |
+
+For annual prediction, model 5 is the minimum useful causal model. For diagnosis, models 2 through 4 should also be fit separately so that a strong condition signal is not hidden by a predation signal, or vice versa. The transport model is especially useful as a bridge between climate forcing and the two survival gates because it determines where larvae and juveniles encounter prey and predators.

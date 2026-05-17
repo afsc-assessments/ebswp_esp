@@ -159,7 +159,7 @@ div.csl-indent {
   <li><a href="#main-conclusion" id="toc-main-conclusion" class="nav-link active" data-scroll-target="#main-conclusion">Main Conclusion</a></li>
   <li><a href="#integrated-causal-map" id="toc-integrated-causal-map" class="nav-link" data-scroll-target="#integrated-causal-map">Integrated Causal Map</a></li>
   <li><a href="#site-contents" id="toc-site-contents" class="nav-link" data-scroll-target="#site-contents">Site Contents</a></li>
-  <li><a href="#practical-model" id="toc-practical-model" class="nav-link" data-scroll-target="#practical-model">Practical Model</a></li>
+  <li><a href="#practical-models" id="toc-practical-models" class="nav-link" data-scroll-target="#practical-models">Practical Models</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/afsc-assessments/ebswp_esp/blob/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -275,16 +275,52 @@ flowchart TB
 <li><a href="./references.html">References</a>: cited references with DOI and source links.</li>
 </ul>
 </section>
-<section id="practical-model" class="level2">
-<h2 class="anchored" data-anchor-id="practical-model">Practical Model</h2>
-<p>The minimum useful causal model is:</p>
-<pre class="text"><code>Age3_recruitment =
-  f(spawner output,
-    age0 energy condition,
-    age1-age2 predator overlap,
-    cohort density,
-    observation/assessment uncertainty)</code></pre>
-<p>In that model, age-0 condition is a mediator of ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap is a mediator of cold pool area, predator biomass, juvenile distribution, and adult pollock biomass.</p>
+<section id="practical-models" class="level2">
+<h2 class="anchored" data-anchor-id="practical-models">Practical Models</h2>
+<p>A practical model does not need to include every process in the causal map. It should preserve the main stage structure: spawner output sets the starting cohort size, age-0 condition filters overwinter survival, and age-1 to age-2 predator overlap filters survival to age 3.</p>
+<p>The models below are useful as a progression from a minimum assessment-linked model to a fuller causal model.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Form</th>
+<th>Best use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>1. Baseline stock-recruit model</strong></td>
+<td><code>Age3_recruitment = f(spawner output, cohort density, assessment uncertainty)</code></td>
+<td>Establishes the baseline recruitment expectation and residual pattern before adding environmental or ecological covariates.</td>
+</tr>
+<tr class="even">
+<td><strong>2. Age-0 condition model</strong></td>
+<td><code>Age3_recruitment = f(spawner output, age0 total energy or energy density, cohort density, uncertainty)</code></td>
+<td>Tests whether fall juvenile size, lipid, or total energy explains later recruitment after accounting for spawner output. This is the most direct practical expression of the age-0 energy gate.</td>
+</tr>
+<tr class="odd">
+<td><strong>3. Predator-overlap model</strong></td>
+<td><code>Age3_recruitment = f(spawner output, juvenile-predator overlap, adult pollock biomass, predator biomass, uncertainty)</code></td>
+<td>Tests whether survival from age 1 to age 3 is limited by cannibalism or other predators. Adult pollock biomass and arrowtooth flounder distribution are treated as drivers of spatially explicit predation risk.</td>
+</tr>
+<tr class="even">
+<td><strong>4. Transport and nursery-delivery model</strong></td>
+<td><code>Age3_recruitment = f(spawner output, spawning location, larval transport, prey match, early survival, uncertainty)</code></td>
+<td>Tests whether cohorts succeed because eggs and larvae are delivered to prey-rich and predator-safe nursery habitat. This model is most useful when particle tracking, egg/larval surveys, or spawning-location products are available.</td>
+</tr>
+<tr class="odd">
+<td><strong>5. Integrated gate model</strong></td>
+<td><code>Age3_recruitment = f(spawner output, age0 condition, age1-age2 predator overlap, cohort density, uncertainty)</code></td>
+<td>Combines the two best-supported survival gates. Age-0 condition mediates ice timing, bloom timing, summer mixing, prey production, and SST. Predator overlap mediates cold pool area, predator biomass, juvenile distribution, and adult pollock biomass.</td>
+</tr>
+</tbody>
+</table>
+<p>For annual prediction, model 5 is the minimum useful causal model. For diagnosis, models 2 through 4 should also be fit separately so that a strong condition signal is not hidden by a predation signal, or vice versa. The transport model is especially useful as a bridge between climate forcing and the two survival gates because it determines where larvae and juveniles encounter prey and predators.</p>
 
 
 

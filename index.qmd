@@ -76,6 +76,7 @@ flowchart TB
 
 - [Evidence](evidence.qmd): stage-specific synthesis and candidate indicators.
 - [DAGs](dags.qmd): alternative directed acyclic graphs for competing hypotheses.
+- [PCMCI+](pcmci.qmd): implementation plan for time-series causal discovery.
 - [Infographics](infographics.qmd): compact visual summaries for a science audience.
 - [References](references.qmd): cited references with DOI and source links.
 

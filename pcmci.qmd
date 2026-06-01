@@ -1,0 +1,175 @@
+---
+title: "PCMCI+ Implementation"
+description: "A practical workflow for using PCMCI+ to screen causal pathways affecting EBS pollock recruitment."
+---
+
+PCMCI+ is a conditional-independence causal discovery method for time series. It extends PCMCI to detect both lagged links and contemporaneous links, which is useful when annual ecological data are too coarse to resolve all biological delays [@runge2020pcmcip]. For this application, it should be used as a **hypothesis-screening and model-building tool**, not as final proof of causality.
+
+## Role In This Project
+
+The existing DAGs define the scientific alternatives. PCMCI+ can help test which links are best supported by the assembled time series:
+
+- bottom-up pathway: physical forcing -> prey -> age-0 energy -> survival,
+- top-down pathway: predator biomass and habitat -> overlap -> age-1 and age-2 mortality,
+- transport pathway: spawning location and circulation -> larval delivery -> age-0 abundance,
+- switching-control pathway: climate state and prior cohorts change which filter dominates.
+
+The most useful product is a ranked set of candidate links that can be carried forward into an explicit recruitment model or state-space model.
+
+## Build A Cohort Table
+
+Use one row per year class. Align variables to the cohort's biological history rather than to a single calendar year.
+
+| Cohort stage | Candidate variables |
+|---|---|
+| Spawning and early supply | year class, SSB, maturity, spawning timing/location, egg index, larval index |
+| Physical forcing | ice retreat date, cold pool area, late-summer SST, wind mixing, stratification, bloom timing |
+| Prey and age-0 condition | copepod/euphausiid index, diet lipid, age-0 length, weight, energy density, total energy |
+| Age-1 and age-2 filtering | adult pollock biomass, arrowtooth biomass, Pacific cod abundance, juvenile-predator overlap, age-1 index |
+| Recruitment response | age-3 recruitment, age-3 recruitment residual, assessment uncertainty |
+
+The table should make the lag convention explicit. For example, `ice_retreat_t` and `age0_energy_t` refer to the cohort's age-0 year; `predator_overlap_t1` refers to the following year when the cohort is age 1.
+
+## Start With Small Networks
+
+Do not start with every possible indicator. Short ecological time series cannot support a large unrestricted graph. Start with 8-15 variables and run separate hypothesis-specific networks before combining them.
+
+::: {.callout-note}
+## Recommended first pass
+
+Begin with linear partial correlation tests. They are easier to diagnose and more stable for short annual time series. Use nonlinear tests only as sensitivity analyses after the linear workflow behaves.
+:::
+
+| Model run | Variables to include |
+|---|---|
+| Bottom-up | SSB, ice retreat, late-summer SST, wind mixing, copepod/euphausiid index, age-0 energy, age-1 index, age-3 recruitment |
+| Top-down | SSB, cold pool area, adult pollock biomass, arrowtooth biomass, juvenile-predator overlap, age-1 index, age-3 recruitment |
+| Transport | spawning location, wind/circulation index, larval distribution index, prey-match index, age-0 abundance, age-3 recruitment |
+| Combined reduced | one best indicator from each pathway plus SSB and recruitment |
+
+## Preprocess Before Running PCMCI+
+
+PCMCI+ assumes a stationary time-series graph under causal sufficiency. Fisheries and climate data will not perfectly satisfy that assumption, so preprocessing and sensitivity checks are part of the analysis.
+
+1. Standardize all variables.
+2. Decide whether the target is raw recruitment or recruitment residuals after stock size.
+3. Detrend variables only when the trend is not part of the causal question.
+4. Avoid including several nearly identical proxies in the same run.
+5. Encode missing values consistently.
+6. Check results with and without highly influential years.
+7. Repeat using alternative proxies for prey, age-0 condition, and predator overlap.
+
+## Minimal Python Workflow
+
+Tigramite provides `PCMCI.run_pcmciplus()` for PCMCI+ [@tigramite2026].
+
+```python
+import numpy as np
+import pandas as pd
+
+from tigramite import data_processing as pp
+from tigramite.pcmci import PCMCI
+from tigramite.independence_tests.parcorr import ParCorr
+
+df = pd.read_csv("data/cohort_table.csv")
+
+vars_use = [
+    "SSB",
+    "ice_retreat_t",
+    "late_summer_SST_t",
+    "wind_mixing_t",
+    "copepod_euphausiid_t",
+    "age0_energy_t",
+    "adult_pollock_biomass_t1",
+    "arrowtooth_biomass_t1",
+    "juvenile_predator_overlap_t1",
+    "age3_recruitment_t3",
+]
+
+data = df[vars_use].to_numpy()
+
+dataframe = pp.DataFrame(
+    data,
+    var_names=vars_use,
+    missing_flag=np.nan,
+)
+
+ci_test = ParCorr(significance="analytic")
+
+pcmci = PCMCI(
+    dataframe=dataframe,
+    cond_ind_test=ci_test,
+    verbosity=1,
+)
+
+results = pcmci.run_pcmciplus(
+    tau_min=0,
+    tau_max=4,
+    pc_alpha=[0.01, 0.05, 0.10, 0.20],
+    contemp_collider_rule="majority",
+    conflict_resolution=True,
+)
+
+pcmci.print_significant_links(
+    p_matrix=results["p_matrix"],
+    val_matrix=results["val_matrix"],
+    alpha_level=0.05,
+)
+```
+
+Use `tau_max=4` if variables are indexed by calendar year. If the dataset is already cohort-aligned with variables such as `age0_energy_t` and `predator_overlap_t1`, a smaller `tau_max` may be more interpretable because the biological lags are encoded in the variable names.
+
+## Use Prior Knowledge
+
+PCMCI+ can be run with link assumptions. For this problem, prior knowledge should prevent biologically impossible links:
+
+- age-3 recruitment cannot cause age-0 energy for the same cohort,
+- future predator overlap cannot cause past larval distribution,
+- SSB can affect egg supply, but egg supply should not affect same-year SSB,
+- physical climate indicators can be treated as external drivers unless feedbacks are explicitly modeled.
+
+In practice, run one unrestricted diagnostic analysis, then rerun with a constrained link-assumption graph that respects cohort timing.
+
+## Interpreting Output
+
+PCMCI+ returns a graph, p-value matrix, and test-statistic matrix. For this project, summarize each retained link as:
+
+| Output item | Interpretation |
+|---|---|
+| `source -> target` | Candidate directed pathway under PCMCI+ assumptions |
+| lag | Biological delay between source and target |
+| p-value | Conditional-independence screening support |
+| test statistic | Link strength on the scale of the chosen CI test |
+| DAG match | Whether the link supports bottom-up, top-down, transport, or switching-control hypotheses |
+
+The strongest result would be repeated recovery of the same pathway across model subsets, alternative proxies, lag settings, and sensitivity runs.
+
+## Diagnostics And Sensitivity Runs
+
+Report a small ensemble rather than one graph:
+
+- `ParCorr` with raw recruitment,
+- `ParCorr` with recruitment residuals,
+- bottom-up subset,
+- top-down subset,
+- combined reduced subset,
+- alternative `pc_alpha` choices,
+- leave-one-out or block sensitivity for influential years,
+- nonlinear conditional-independence test as a secondary check if sample size allows.
+
+## Limitations
+
+PCMCI+ does not remove the need for ecological judgment. The method can be misled by unmeasured confounders, nonstationary regime shifts, changes in survey coverage, and short annual records. In this analysis, causal language should be phrased as **PCMCI+ support for candidate causal links under stated assumptions**.
+
+## Deliverables To Add To The Repository
+
+| File | Purpose |
+|---|---|
+| `data/cohort_table.csv` | Annual cohort-aligned input table |
+| `analysis/pcmci_plus.py` | Reproducible PCMCI+ analysis script |
+| `analysis/pcmci_config.yml` | Variable sets, lag choices, and link constraints |
+| `outputs/pcmci_links.csv` | Significant links with p-values, lags, and DAG labels |
+| `outputs/pcmci_graph.png` | Network figure for reporting |
+| `outputs/pcmci_sensitivity.csv` | Link stability across sensitivity runs |
+
+The first implementation step is to create `data/cohort_table.csv` with clear variable names and cohort timing. Once that exists, the analysis script can be added without changing the scientific pages.

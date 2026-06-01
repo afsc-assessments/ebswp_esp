@@ -9,6 +9,7 @@ The site synthesizes causal hypotheses affecting survival from eggs and larvae t
 
 - stage-specific evidence synthesis,
 - directed acyclic graph alternatives,
+- PCMCI+ implementation guidance,
 - science-audience infographics,
 - public-facing plain-language infographics,
 - citation-linked references.

@@ -15,7 +15,8 @@ website:
   title: "EBSWP Early Survival Pathways"
   site-url: "https://afsc-assessments.github.io/ebswp_esp/"
   repo-url: "https://github.com/afsc-assessments/ebswp_esp"
-  repo-actions: [source, issue]
+  repo-actions: [edit, source, issue]
+  search: true
   navbar:
     left:
       - href: index.qmd
@@ -57,3 +58,4 @@ format:
 
 execute:
   freeze: auto
+  code-overflow: wrap

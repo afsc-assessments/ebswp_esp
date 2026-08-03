@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A practical workflow for using PCMCI+ to screen causal pathways affecting EBS pollock recruitment.">
+<meta name="description" content="Using a dynamic structural equation model to estimate effect sizes for the candidate recruitment DAGs and rank them by AIC.">
 
-<title>PCMCI+ Implementation – EBSWP Early Survival Pathways</title>
+<title>DSEM Confirmatory Estimation – EBSWP Early Survival Pathways</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -127,6 +127,35 @@ div.csl-indent {
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -161,11 +190,11 @@ div.csl-indent {
 <span class="menu-text">DAGs</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./pcmci.html" aria-current="page"> 
+    <a class="nav-link" href="./pcmci.html"> 
 <span class="menu-text">PCMCI+</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./dsem.html"> 
+    <a class="nav-link active" href="./dsem.html" aria-current="page"> 
 <span class="menu-text">DSEM</span></a>
   </li>  
   <li class="nav-item">
@@ -197,29 +226,28 @@ div.csl-indent {
    
   <ul>
   <li><a href="#role-in-this-project" id="toc-role-in-this-project" class="nav-link active" data-scroll-target="#role-in-this-project">Role In This Project</a></li>
-  <li><a href="#build-a-cohort-table" id="toc-build-a-cohort-table" class="nav-link" data-scroll-target="#build-a-cohort-table">Build A Cohort Table</a></li>
-  <li><a href="#start-with-small-networks" id="toc-start-with-small-networks" class="nav-link" data-scroll-target="#start-with-small-networks">Start With Small Networks</a></li>
-  <li><a href="#preprocess-before-running-pcmci" id="toc-preprocess-before-running-pcmci" class="nav-link" data-scroll-target="#preprocess-before-running-pcmci">Preprocess Before Running PCMCI+</a></li>
-  <li><a href="#minimal-python-workflow" id="toc-minimal-python-workflow" class="nav-link" data-scroll-target="#minimal-python-workflow">Minimal Python Workflow</a></li>
-  <li><a href="#use-prior-knowledge" id="toc-use-prior-knowledge" class="nav-link" data-scroll-target="#use-prior-knowledge">Use Prior Knowledge</a></li>
+  <li><a href="#why-dsem-rather-than-a-plain-sem" id="toc-why-dsem-rather-than-a-plain-sem" class="nav-link" data-scroll-target="#why-dsem-rather-than-a-plain-sem">Why DSEM Rather Than A Plain SEM</a></li>
+  <li><a href="#lag-convention" id="toc-lag-convention" class="nav-link" data-scroll-target="#lag-convention">Lag Convention</a></li>
+  <li><a href="#the-four-hypotheses-as-dsem-specifications" id="toc-the-four-hypotheses-as-dsem-specifications" class="nav-link" data-scroll-target="#the-four-hypotheses-as-dsem-specifications">The Four Hypotheses As DSEM Specifications</a></li>
+  <li><a href="#minimal-r-workflow" id="toc-minimal-r-workflow" class="nav-link" data-scroll-target="#minimal-r-workflow">Minimal R Workflow</a></li>
+  <li><a href="#sensitivity-analyses" id="toc-sensitivity-analyses" class="nav-link" data-scroll-target="#sensitivity-analyses">Sensitivity Analyses</a></li>
   <li><a href="#interpreting-output" id="toc-interpreting-output" class="nav-link" data-scroll-target="#interpreting-output">Interpreting Output</a></li>
-  <li><a href="#diagnostics-and-sensitivity-runs" id="toc-diagnostics-and-sensitivity-runs" class="nav-link" data-scroll-target="#diagnostics-and-sensitivity-runs">Diagnostics And Sensitivity Runs</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#deliverables-to-add-to-the-repository" id="toc-deliverables-to-add-to-the-repository" class="nav-link" data-scroll-target="#deliverables-to-add-to-the-repository">Deliverables To Add To The Repository</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/afsc-assessments/ebswp_esp/edit/main/pcmci.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/blob/main/pcmci.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/afsc-assessments/ebswp_esp/edit/main/dsem.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/blob/main/dsem.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">PCMCI+ Implementation</h1>
+<h1 class="title">DSEM Confirmatory Estimation</h1>
 </div>
 
 <div>
   <div class="description">
-    A practical workflow for using PCMCI+ to screen causal pathways affecting EBS pollock recruitment.
+    Using a dynamic structural equation model to estimate effect sizes for the candidate recruitment DAGs and rank them by AIC.
   </div>
 </div>
 
@@ -236,21 +264,33 @@ div.csl-indent {
 </header>
 
 
-<p>PCMCI+ is a conditional-independence causal discovery method for time series. It extends PCMCI to detect both lagged links and contemporaneous links, which is useful when annual ecological data are too coarse to resolve all biological delays <span class="citation" data-cites="runge2020pcmcip">(<a href="#ref-runge2020pcmcip" role="doc-biblioref">Runge 2020</a>)</span>. For this application, it should be used as a <strong>hypothesis-screening and model-building tool</strong>, not as final proof of causality.</p>
+<p>A dynamic structural equation model (DSEM) is a confirmatory complement to the PCMCI+ screening. Where PCMCI+ discovers and ranks individual candidate links under conditional-independence tests, DSEM takes a <strong>specified</strong> directed graph and estimates the standardized strength of every path simultaneously, then lets competing graphs be compared by information criteria <span class="citation" data-cites="thorson2024dsem">(<a href="#ref-thorson2024dsem" role="doc-biblioref">Thorson et al. 2024</a>)</span>. This is the same approach Ma et al.&nbsp;used to disentangle the multi-causal recruitment dynamics of Northeast Arctic cod, the Barents Sea analogue of EBS pollock <span class="citation" data-cites="ma2026neac">(<a href="#ref-ma2026neac" role="doc-biblioref">Ma et al. 2026</a>)</span>.</p>
 <section id="role-in-this-project" class="level2">
 <h2 class="anchored" data-anchor-id="role-in-this-project">Role In This Project</h2>
-<p>The existing DAGs define the scientific alternatives. PCMCI+ can help test which links are best supported by the assembled time series:</p>
+<p>The DAGs on the <a href="./dags.html">DAGs</a> page define the scientific alternatives. PCMCI+ asks <em>which links are supported by the data</em>. DSEM asks two further questions:</p>
 <ul>
-<li>bottom-up pathway: physical forcing -&gt; prey -&gt; age-0 energy -&gt; survival,</li>
-<li>top-down pathway: predator biomass and habitat -&gt; overlap -&gt; age-1 and age-2 mortality,</li>
-<li>transport pathway: spawning location and circulation -&gt; larval delivery -&gt; age-0 abundance,</li>
-<li>switching-control pathway: climate state and prior cohorts change which filter dominates.</li>
+<li><strong>How large is each effect, controlling for the others?</strong> All paths are estimated jointly on standardized series, so the slopes are comparable effect sizes rather than pairwise correlations.</li>
+<li><strong>Which whole hypothesis fits best?</strong> Each DAG (A bottom-up, B top-down, C transport, D switching) is fit as a single model and the four are ranked by AIC. This is the confirmatory analogue of the model-selection step in <span class="citation" data-cites="ma2026neac">Ma et al. (<a href="#ref-ma2026neac" role="doc-biblioref">2026</a>)</span>.</li>
 </ul>
-<p>The most useful product is a ranked set of candidate links that can be carried forward into an explicit recruitment model or state-space model.</p>
+<p>The two methods share one input — <code>data/cohort_table.csv</code> — and one preprocessing convention, so their results are directly cross-readable.</p>
 </section>
-<section id="build-a-cohort-table" class="level2">
-<h2 class="anchored" data-anchor-id="build-a-cohort-table">Build A Cohort Table</h2>
-<p>Use one row per year class. Align variables to the cohort’s biological history rather than to a single calendar year.</p>
+<section id="why-dsem-rather-than-a-plain-sem" class="level2">
+<h2 class="anchored" data-anchor-id="why-dsem-rather-than-a-plain-sem">Why DSEM Rather Than A Plain SEM</h2>
+<p>The EBS early-survival series are short and gappy, and the candidate drivers are collinear (temperature, cold pool, and ice timing co-vary). DSEM is built for exactly this setting <span class="citation" data-cites="thorson2024dsem">(<a href="#ref-thorson2024dsem" role="doc-biblioref">Thorson et al. 2024</a>)</span>:</p>
+<ul>
+<li>internal missing values are handled as a state-space process rather than by deleting cohorts,</li>
+<li>simultaneous and lagged paths can coexist, which matters for the prior-cohort link in DAG D,</li>
+<li>shared variation among collinear drivers is distributed across paths, so each coefficient reflects the additional explanatory power beyond the others,</li>
+<li>standardized slopes make the four hypotheses comparable on one scale.</li>
+</ul>
+</section>
+<section id="lag-convention" class="level2">
+<h2 class="anchored" data-anchor-id="lag-convention">Lag Convention</h2>
+<p>Because the cohort table already aligns every variable to the year class (<code>*_t</code> for the age-0 year, <code>*_t1</code> for age 1, <code>*_t3</code> for age-3 recruitment), the structural paths are written at lag 0 in the cohort frame. The genuinely dynamic element is reserved for DAG D, where the previous year class helps set the predator field — a real lag-1 link in cohort time. A calendar-year alternative, in which the cohort timing is encoded by DSEM lag arguments instead of in the column names, is the closer mirror of <span class="citation" data-cites="ma2026neac">Ma et al. (<a href="#ref-ma2026neac" role="doc-biblioref">2026</a>)</span> and is noted in the analysis script.</p>
+</section>
+<section id="the-four-hypotheses-as-dsem-specifications" class="level2">
+<h2 class="anchored" data-anchor-id="the-four-hypotheses-as-dsem-specifications">The Four Hypotheses As DSEM Specifications</h2>
+<p>Each DAG becomes a short path specification (<code>from -&gt; to, lag, name</code>). The full, runnable definitions are in <code>analysis/dsem_fit.R</code>; the structure is:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -258,165 +298,101 @@ div.csl-indent {
 </colgroup>
 <thead>
 <tr class="header">
-<th>Cohort stage</th>
-<th>Candidate variables</th>
+<th>DAG</th>
+<th>Backbone of estimated paths</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Spawning and early supply</td>
-<td>year class, SSB, maturity, spawning timing/location, egg index, larval index</td>
+<td><strong>A. Bottom-up</strong></td>
+<td>ice / wind / SST <span class="math inline">\(\rightarrow\)</span> copepod-euphausiid <span class="math inline">\(\rightarrow\)</span> age-0 energy <span class="math inline">\(\rightarrow\)</span> recruitment; SSB <span class="math inline">\(\rightarrow\)</span> recruitment</td>
 </tr>
 <tr class="even">
-<td>Physical forcing</td>
-<td>ice retreat date, cold pool area, late-summer SST, wind mixing, stratification, bloom timing</td>
+<td><strong>B. Top-down</strong></td>
+<td>adult pollock, arrowtooth, cold pool, SST <span class="math inline">\(\rightarrow\)</span> juvenile-predator overlap <span class="math inline">\(\rightarrow\)</span> recruitment; SSB <span class="math inline">\(\rightarrow\)</span> recruitment</td>
 </tr>
 <tr class="odd">
-<td>Prey and age-0 condition</td>
-<td>copepod/euphausiid index, diet lipid, age-0 length, weight, energy density, total energy</td>
+<td><strong>C. Transport</strong></td>
+<td>SST / wind <span class="math inline">\(\rightarrow\)</span> spawning location and transport <span class="math inline">\(\rightarrow\)</span> prey match and age-0 abundance <span class="math inline">\(\rightarrow\)</span> recruitment</td>
 </tr>
 <tr class="even">
-<td>Age-1 and age-2 filtering</td>
-<td>adult pollock biomass, arrowtooth biomass, Pacific cod abundance, juvenile-predator overlap, age-1 index</td>
-</tr>
-<tr class="odd">
-<td>Recruitment response</td>
-<td>age-3 recruitment, age-3 recruitment residual, assessment uncertainty</td>
+<td><strong>D. Switching</strong></td>
+<td>bottom-up chain to age-1, top-down overlap to recruitment, plus a prior-cohort (lag-1) carryover; state-dependence added as an interaction or regime split</td>
 </tr>
 </tbody>
 </table>
-<p>The table should make the lag convention explicit. For example, <code>ice_retreat_t</code> and <code>age0_energy_t</code> refer to the cohort’s age-0 year; <code>predator_overlap_t1</code> refers to the following year when the cohort is age 1.</p>
+<p>DAG A treats age-0 total energy as the central mediator, consistent with the strong condition–survival evidence for EBS pollock <span class="citation" data-cites="heintz2013 moss2009 siddon2013 sigler2016">(<a href="#ref-heintz2013" role="doc-biblioref">Heintz et al. 2013</a>; <a href="#ref-moss2009" role="doc-biblioref">Moss et al. 2009</a>; <a href="#ref-siddon2013" role="doc-biblioref">Siddon et al. 2013</a>; <a href="#ref-sigler2016" role="doc-biblioref">Sigler et al. 2016</a>)</span>. DAG B encodes the overlap-driven predation filter <span class="citation" data-cites="mueter2006 spencer2016">(<a href="#ref-mueter2006" role="doc-biblioref">Mueter et al. 2006</a>; <a href="#ref-spencer2016" role="doc-biblioref">Spencer et al. 2016</a>)</span>. DAG D follows the oscillating-control reading in which climate state switches which filter dominates <span class="citation" data-cites="mueter2006 mueter2011 sigler2016">(<a href="#ref-mueter2006" role="doc-biblioref">Mueter et al. 2006</a>, <a href="#ref-mueter2011" role="doc-biblioref">2011</a>; <a href="#ref-sigler2016" role="doc-biblioref">Sigler et al. 2016</a>)</span>.</p>
 </section>
-<section id="start-with-small-networks" class="level2">
-<h2 class="anchored" data-anchor-id="start-with-small-networks">Start With Small Networks</h2>
-<p>Do not start with every possible indicator. Short ecological time series cannot support a large unrestricted graph. Start with 8-15 variables and run separate hypothesis-specific networks before combining them.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Recommended first pass
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Begin with linear partial correlation tests. They are easier to diagnose and more stable for short annual time series. Use nonlinear tests only as sensitivity analyses after the linear workflow behaves.</p>
-</div>
-</div>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Model run</th>
-<th>Variables to include</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Bottom-up</td>
-<td>SSB, ice retreat, late-summer SST, wind mixing, copepod/euphausiid index, age-0 energy, age-1 index, age-3 recruitment</td>
-</tr>
-<tr class="even">
-<td>Top-down</td>
-<td>SSB, cold pool area, adult pollock biomass, arrowtooth biomass, juvenile-predator overlap, age-1 index, age-3 recruitment</td>
-</tr>
-<tr class="odd">
-<td>Transport</td>
-<td>spawning location, wind/circulation index, larval distribution index, prey-match index, age-0 abundance, age-3 recruitment</td>
-</tr>
-<tr class="even">
-<td>Combined reduced</td>
-<td>one best indicator from each pathway plus SSB and recruitment</td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="preprocess-before-running-pcmci" class="level2">
-<h2 class="anchored" data-anchor-id="preprocess-before-running-pcmci">Preprocess Before Running PCMCI+</h2>
-<p>PCMCI+ assumes a stationary time-series graph under causal sufficiency. Fisheries and climate data will not perfectly satisfy that assumption, so preprocessing and sensitivity checks are part of the analysis.</p>
-<ol type="1">
-<li>Standardize all variables.</li>
-<li>Decide whether the target is raw recruitment or recruitment residuals after stock size.</li>
-<li>Detrend variables only when the trend is not part of the causal question.</li>
-<li>Avoid including several nearly identical proxies in the same run.</li>
-<li>Encode missing values consistently.</li>
-<li>Check results with and without highly influential years.</li>
-<li>Repeat using alternative proxies for prey, age-0 condition, and predator overlap.</li>
-</ol>
-</section>
-<section id="minimal-python-workflow" class="level2">
-<h2 class="anchored" data-anchor-id="minimal-python-workflow">Minimal Python Workflow</h2>
-<p>Tigramite provides <code>PCMCI.run_pcmciplus()</code> for PCMCI+ <span class="citation" data-cites="tigramite2026">(<a href="#ref-tigramite2026" role="doc-biblioref"><span class="nocase">Runge and contributors</span> 2026</a>)</span>.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<section id="minimal-r-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="minimal-r-workflow">Minimal R Workflow</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dsem)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tigramite <span class="im">import</span> data_processing <span class="im">as</span> pp</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tigramite.pcmci <span class="im">import</span> PCMCI</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tigramite.independence_tests.parcorr <span class="im">import</span> ParCorr</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/cohort_table.csv"</span>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>vars_use <span class="op">=</span> [</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SSB"</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ice_retreat_t"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"late_summer_SST_t"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"wind_mixing_t"</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"copepod_euphausiid_t"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age0_energy_t"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adult_pollock_biomass_t1"</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"arrowtooth_biomass_t1"</span>,</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"juvenile_predator_overlap_t1"</span>,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"age3_recruitment_t3"</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> df[vars_use].to_numpy()</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>dataframe <span class="op">=</span> pp.DataFrame(</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    data,</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    var_names<span class="op">=</span>vars_use,</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    missing_flag<span class="op">=</span>np.nan,</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ci_test <span class="op">=</span> ParCorr(significance<span class="op">=</span><span class="st">"analytic"</span>)</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>pcmci <span class="op">=</span> PCMCI(</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    dataframe<span class="op">=</span>dataframe,</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    cond_ind_test<span class="op">=</span>ci_test,</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    verbosity<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> pcmci.run_pcmciplus(</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    tau_min<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    tau_max<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    pc_alpha<span class="op">=</span>[<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.10</span>, <span class="fl">0.20</span>],</span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    contemp_collider_rule<span class="op">=</span><span class="st">"majority"</span>,</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    conflict_resolution<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>pcmci.print_significant_links(</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    p_matrix<span class="op">=</span>results[<span class="st">"p_matrix"</span>],</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    val_matrix<span class="op">=</span>results[<span class="st">"val_matrix"</span>],</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    alpha_level<span class="op">=</span><span class="fl">0.05</span>,</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Use <code>tau_max=4</code> if variables are indexed by calendar year. If the dataset is already cohort-aligned with variables such as <code>age0_energy_t</code> and <code>predator_overlap_t1</code>, a smaller <code>tau_max</code> may be more interpretable because the biological lags are encoded in the variable names.</p>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>cohort <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"data/cohort_table.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># standardize; keep NAs (dsem treats them as states)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>z     <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">scale</span>(x))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>nodes <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="fu">names</span>(cohort), <span class="st">"year"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>tsdat <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">as.data.frame</span>(<span class="fu">lapply</span>(cohort[nodes], z)), <span class="at">start =</span> <span class="fu">min</span>(cohort<span class="sc">$</span>year))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>dag_B <span class="ot">&lt;-</span> <span class="st">"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="st">  SSB                          -&gt; age3_recruitment_t3,         0, ssb_R</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">  adult_pollock_biomass_t1     -&gt; juvenile_predator_overlap_t1, 0, adult_ov</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="st">  arrowtooth_biomass_t1        -&gt; juvenile_predator_overlap_t1, 0, atf_ov</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="st">  cold_pool_t1                 -&gt; juvenile_predator_overlap_t1, 0, cp_ov</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="st">  late_summer_SST_t            -&gt; juvenile_predator_overlap_t1, 0, sst_ov</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="st">  juvenile_predator_overlap_t1 -&gt; age3_recruitment_t3,          0, ov_R</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="st">"</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">dsem</span>(<span class="at">sem =</span> dag_B, <span class="at">tsdata =</span> tsdat, <span class="at">estimate_delta0 =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> <span class="fu">rep</span>(<span class="st">"normal"</span>, <span class="fu">ncol</span>(tsdat)))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)   <span class="co"># standardized path coefficients</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fit)       <span class="co"># for ranking against DAGs A, C, D</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The four DAGs are fit on the same <code>tsdat</code>, so the AIC differences reflect structure rather than data coverage. The DAG with the lowest AIC is the best-supported whole hypothesis; its summary gives the signed, standardized effect of each path.</p>
 </section>
-<section id="use-prior-knowledge" class="level2">
-<h2 class="anchored" data-anchor-id="use-prior-knowledge">Use Prior Knowledge</h2>
-<p>PCMCI+ can be run with link assumptions. For this problem, prior knowledge should prevent biologically impossible links:</p>
-<ul>
-<li>age-3 recruitment cannot cause age-0 energy for the same cohort,</li>
-<li>future predator overlap cannot cause past larval distribution,</li>
-<li>SSB can affect egg supply, but egg supply should not affect same-year SSB,</li>
-<li>physical climate indicators can be treated as external drivers unless feedbacks are explicitly modeled.</li>
-</ul>
-<p>In practice, run one unrestricted diagnostic analysis, then rerun with a constrained link-assumption graph that respects cohort timing.</p>
+<section id="sensitivity-analyses" class="level2">
+<h2 class="anchored" data-anchor-id="sensitivity-analyses">Sensitivity Analyses</h2>
+<p>Run the winning DAG through the four robustness checks used by <span class="citation" data-cites="ma2026neac">Ma et al. (<a href="#ref-ma2026neac" role="doc-biblioref">2026</a>)</span>, on the same cohort table:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Check</th>
+<th>Question</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Causal-map stability</td>
+<td>Do paths persist across rolling windows?</td>
+<td>retention frequency per path</td>
+</tr>
+<tr class="even">
+<td>Data uncertainty</td>
+<td>Are slopes robust to input CI?</td>
+<td>bootstrap slope distributions and <em>p</em></td>
+</tr>
+<tr class="odd">
+<td>Data richness</td>
+<td>Do conclusions need long series?</td>
+<td>slope vs.&nbsp;start year</td>
+</tr>
+<tr class="even">
+<td>Nonstationarity</td>
+<td>Do slopes change sign over time?</td>
+<td>rolling-window slopes</td>
+</tr>
+</tbody>
+</table>
+<p>The nonstationarity check is the highest-value one for EBS pollock: it tests directly whether an environment–recruitment slope has reversed, the pattern Ma et al.&nbsp;found for cod and the concern behind projected pollock declines under warming <span class="citation" data-cites="mueter2011 spencer2016">(<a href="#ref-mueter2011" role="doc-biblioref">Mueter et al. 2011</a>; <a href="#ref-spencer2016" role="doc-biblioref">Spencer et al. 2016</a>)</span>. A reversal here would also be evidence for DAG D over a single stationary coefficient.</p>
 </section>
 <section id="interpreting-output" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-output">Interpreting Output</h2>
-<p>PCMCI+ returns a graph, p-value matrix, and test-statistic matrix. For this project, summarize each retained link as:</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 50%">
@@ -430,46 +406,28 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>source -&gt; target</code></td>
-<td>Candidate directed pathway under PCMCI+ assumptions</td>
+<td>path slope</td>
+<td>standardized effect of source on target, controlling for other paths</td>
 </tr>
 <tr class="even">
-<td>lag</td>
-<td>Biological delay between source and target</td>
+<td>slope sign</td>
+<td>direction of the hypothesized mechanism</td>
 </tr>
 <tr class="odd">
-<td>p-value</td>
-<td>Conditional-independence screening support</td>
+<td>AIC / <span class="math inline">\(\Delta\)</span>AIC</td>
+<td>relative support for the whole DAG against the other hypotheses</td>
 </tr>
 <tr class="even">
-<td>test statistic</td>
-<td>Link strength on the scale of the chosen CI test</td>
-</tr>
-<tr class="odd">
-<td>DAG match</td>
-<td>Whether the link supports bottom-up, top-down, transport, or switching-control hypotheses</td>
+<td>rolling slope</td>
+<td>nonstationarity; sign change supports switching control</td>
 </tr>
 </tbody>
 </table>
-<p>The strongest result would be repeated recovery of the same pathway across model subsets, alternative proxies, lag settings, and sensitivity runs.</p>
-</section>
-<section id="diagnostics-and-sensitivity-runs" class="level2">
-<h2 class="anchored" data-anchor-id="diagnostics-and-sensitivity-runs">Diagnostics And Sensitivity Runs</h2>
-<p>Report a small ensemble rather than one graph:</p>
-<ul>
-<li><code>ParCorr</code> with raw recruitment,</li>
-<li><code>ParCorr</code> with recruitment residuals,</li>
-<li>bottom-up subset,</li>
-<li>top-down subset,</li>
-<li>combined reduced subset,</li>
-<li>alternative <code>pc_alpha</code> choices,</li>
-<li>leave-one-out or block sensitivity for influential years,</li>
-<li>nonlinear conditional-independence test as a secondary check if sample size allows.</li>
-</ul>
+<p>As with PCMCI+, causal language stays conditional: DSEM estimates effect sizes <em>under an assumed graph</em>. Its contribution is to quantify and rank the hypotheses the DAGs and PCMCI+ put forward, not to prove a mechanism on its own.</p>
 </section>
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
-<p>PCMCI+ does not remove the need for ecological judgment. The method can be misled by unmeasured confounders, nonstationary regime shifts, changes in survey coverage, and short annual records. In this analysis, causal language should be phrased as <strong>PCMCI+ support for candidate causal links under stated assumptions</strong>.</p>
+<p>DSEM shares the short-series and nonstationarity vulnerabilities of any method applied to these data, and adds the assumption that relationships are linear. Gadid temperature responses are often dome-shaped, so a linear SST term cannot represent an optimum; Ma et al.&nbsp;note the same limitation and that a quadratic term changes their projections <span class="citation" data-cites="ma2026neac">(<a href="#ref-ma2026neac" role="doc-biblioref">Ma et al. 2026</a>)</span>. The cohort-aligned, basin-scale form also collapses the spatial overlap mechanisms that DAGs B and C are really about — the strongest extension would supply VAST-based overlap fields rather than scalar indices.</p>
 </section>
 <section id="deliverables-to-add-to-the-repository" class="level2">
 <h2 class="anchored" data-anchor-id="deliverables-to-add-to-the-repository">Deliverables To Add To The Repository</h2>
@@ -486,43 +444,55 @@ div.csl-indent {
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>data/cohort_table.csv</code></td>
-<td>Annual cohort-aligned input table</td>
+<td><code>analysis/build_cohort_table.R</code></td>
+<td>Assemble <code>data/cohort_table.csv</code> from the assessment, <code>coldpool</code>, and ESP indicators</td>
 </tr>
 <tr class="even">
-<td><code>analysis/pcmci_plus.py</code></td>
-<td>Reproducible PCMCI+ analysis script</td>
+<td><code>analysis/dsem_fit.R</code></td>
+<td>Fit DAGs A–D, rank by AIC, run sensitivity analyses</td>
 </tr>
 <tr class="odd">
-<td><code>analysis/pcmci_config.yml</code></td>
-<td>Variable sets, lag choices, and link constraints</td>
+<td><code>outputs/dsem_paths.csv</code></td>
+<td>Standardized path coefficients with SE and <em>p</em> for the best DAG</td>
 </tr>
 <tr class="even">
-<td><code>outputs/pcmci_links.csv</code></td>
-<td>Significant links with p-values, lags, and DAG labels</td>
-</tr>
-<tr class="odd">
-<td><code>outputs/pcmci_graph.png</code></td>
-<td>Network figure for reporting</td>
-</tr>
-<tr class="even">
-<td><code>outputs/pcmci_sensitivity.csv</code></td>
-<td>Link stability across sensitivity runs</td>
+<td><code>outputs/dsem_aic.csv</code></td>
+<td>AIC and <span class="math inline">\(\Delta\)</span>AIC for the four hypotheses</td>
 </tr>
 </tbody>
 </table>
-<p>The first implementation step is to create <code>data/cohort_table.csv</code> with clear variable names and cohort timing. Once that exists, the analysis script can be added without changing the scientific pages.</p>
 
 
 
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-runge2020pcmcip" class="csl-entry" role="listitem">
-Runge, Jakob. 2020. <span>“Discovering Contemporaneous and Lagged Causal Relations in Autocorrelated Nonlinear Time Series Datasets.”</span> <em>Proceedings of the 36th Conference on Uncertainty in Artificial Intelligence</em>, Proceedings of machine learning research, vol. 124: 1388–97. <a href="https://proceedings.mlr.press/v124/runge20a.html">https://proceedings.mlr.press/v124/runge20a.html</a>.
+<div id="ref-heintz2013" class="csl-entry" role="listitem">
+Heintz, Ron A., Elizabeth C. Siddon, Edward V. Farley, and Jeffrey M. Napp. 2013. <span>“Correlation Between Recruitment and Fall Condition of Age-0 Pollock (<span class="nocase">Theragra chalcogramma</span>) from the Eastern Bering Sea Under Varying Climate Conditions.”</span> <em>Deep-Sea Research Part II: Topical Studies in Oceanography</em> 94: 150–56. <a href="https://doi.org/10.1016/j.dsr2.2013.04.006">https://doi.org/10.1016/j.dsr2.2013.04.006</a>.
 </div>
-<div id="ref-tigramite2026" class="csl-entry" role="listitem">
-<span class="nocase">Runge, Jakob, and contributors</span>. 2026. <em>Tigramite Documentation: PCMCI</em>. <a href="https://jakobrunge.github.io/tigramite/_modules/tigramite/pcmci.html">https://jakobrunge.github.io/tigramite/_modules/tigramite/pcmci.html</a>.
+<div id="ref-ma2026neac" class="csl-entry" role="listitem">
+Ma, Shuyang, Bjarte Bogstad, Padmini Dalpadado, et al. 2026. <span>“Leveraging the Highly Data-Rich Northeast Arctic Cod (Gadus Morhua, Gadidae) to Identify Key Biophysical Factors Behind Recruitment Success.”</span> <em>Fish and Fisheries</em> 27 (6): 1006–27. <a href="https://doi.org/10.1111/faf.70098">https://doi.org/10.1111/faf.70098</a>.
+</div>
+<div id="ref-moss2009" class="csl-entry" role="listitem">
+Moss, Jamal H., Edward V. Farley, Angela M. Feldmann, and James N. Ianelli. 2009. <span>“Spatial Distribution, Energetic Status, and Food Habits of Eastern Bering Sea Age-0 Walleye Pollock.”</span> <em>Transactions of the American Fisheries Society</em> 138 (3): 497–505. <a href="https://doi.org/10.1577/T08-126.1">https://doi.org/10.1577/T08-126.1</a>.
+</div>
+<div id="ref-mueter2011" class="csl-entry" role="listitem">
+Mueter, Franz J., Nicholas A. Bond, James N. Ianelli, and Anne B. Hollowed. 2011. <span>“Expected Declines in Recruitment of Walleye Pollock (<span class="nocase">Theragra chalcogramma</span>) in the Eastern Bering Sea Under Future Climate Change.”</span> <em>ICES Journal of Marine Science</em>, ahead of print. <a href="https://doi.org/10.1093/icesjms/fsr022">https://doi.org/10.1093/icesjms/fsr022</a>.
+</div>
+<div id="ref-mueter2006" class="csl-entry" role="listitem">
+Mueter, Franz J., Carol Ladd, Michael C. Palmer, and Brenda L. Norcross. 2006. <span>“Bottom-up and Top-down Controls of Walleye Pollock (<span class="nocase">Theragra chalcogramma</span>) on the Eastern Bering Sea Shelf.”</span> <em>Progress in Oceanography</em> 68 (2–4): 152–83. <a href="https://doi.org/10.1016/j.pocean.2006.02.012">https://doi.org/10.1016/j.pocean.2006.02.012</a>.
+</div>
+<div id="ref-siddon2013" class="csl-entry" role="listitem">
+Siddon, Elizabeth C., Ron A. Heintz, and Franz J. Mueter. 2013. <span>“Conceptual Model of Energy Allocation in Walleye Pollock (<span class="nocase">Theragra chalcogramma</span>) from Age-0 to Age-1 in the Southeastern Bering Sea.”</span> <em>Deep-Sea Research Part II: Topical Studies in Oceanography</em> 94: 140–49. <a href="https://doi.org/10.1016/j.dsr2.2012.12.007">https://doi.org/10.1016/j.dsr2.2012.12.007</a>.
+</div>
+<div id="ref-sigler2016" class="csl-entry" role="listitem">
+Sigler, Michael F., Jeffrey M. Napp, Phyllis J. Stabeno, Ronald A. Heintz, Michael W. Lomas, and George L. Hunt. 2016. <span>“Variation in Annual Production of Copepods, Euphausiids, and Juvenile Walleye Pollock in the Southeastern Bering Sea.”</span> <em>Deep-Sea Research Part II: Topical Studies in Oceanography</em> 134: 223–34. <a href="https://doi.org/10.1016/j.dsr2.2016.01.003">https://doi.org/10.1016/j.dsr2.2016.01.003</a>.
+</div>
+<div id="ref-spencer2016" class="csl-entry" role="listitem">
+Spencer, Paul D., Kirstin K. Holsman, Stephani Zador, et al. 2016. <span>“Modelling Spatially Dependent Predation Mortality of Eastern Bering Sea Walleye Pollock, and Its Implications for Stock Dynamics Under Future Climate Scenarios.”</span> <em>ICES Journal of Marine Science</em> 73 (5): 1330–42. <a href="https://doi.org/10.1093/icesjms/fsw040">https://doi.org/10.1093/icesjms/fsw040</a>.
+</div>
+<div id="ref-thorson2024dsem" class="csl-entry" role="listitem">
+Thorson, James T., Aaron G. Andrews, Timothy E. Essington, and Scott I. Large. 2024. <span>“Dynamic Structural Equation Models Synthesize Ecosystem Dynamics Constrained by Ecological Mechanisms.”</span> <em>Methods in Ecology and Evolution</em> 15 (4): 744–55. <a href="https://doi.org/10.1111/2041-210X.14289">https://doi.org/10.1111/2041-210X.14289</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -940,7 +910,7 @@ Runge, Jakob. 2020. <span>“Discovering Contemporaneous and Lagged Causal Relat
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/afsc-assessments/ebswp_esp/edit/main/pcmci.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/blob/main/pcmci.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/afsc-assessments/ebswp_esp/edit/main/dsem.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/blob/main/dsem.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/afsc-assessments/ebswp_esp/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

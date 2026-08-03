@@ -6,6 +6,7 @@ project:
     - evidence.qmd
     - dags.qmd
     - pcmci.qmd
+    - dsem.qmd
     - infographics.qmd
     - public-infographics.qmd
     - references.qmd
@@ -14,7 +15,8 @@ website:
   title: "EBSWP Early Survival Pathways"
   site-url: "https://afsc-assessments.github.io/ebswp_esp/"
   repo-url: "https://github.com/afsc-assessments/ebswp_esp"
-  repo-actions: [source, issue]
+  repo-actions: [edit, source, issue]
+  search: true
   navbar:
     left:
       - href: index.qmd
@@ -25,6 +27,8 @@ website:
         text: DAGs
       - href: pcmci.qmd
         text: PCMCI+
+      - href: dsem.qmd
+        text: DSEM
       - href: infographics.qmd
         text: Infographics
       - href: public-infographics.qmd
@@ -54,3 +58,4 @@ format:
 
 execute:
   freeze: auto
+  code-overflow: wrap

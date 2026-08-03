@@ -1,0 +1,60 @@
+---
+title: "cohort_table.csv — data dictionary"
+description: "Column contract and cohort-alignment convention for the shared PCMCI+ / DSEM input table."
+---
+
+**One row per year class (cohort).** The `year` column is the cohort's **birth /
+age-0 year**. Every other column is one number for that cohort, read from the
+calendar year implied by its suffix:
+
+- `*_t`  → the cohort's age-0 / spawning year (same as `year`)
+- `*_t1` → the following calendar year, when the cohort is age 1 (`year + 1`)
+- `*_t3` → three years later, the age-3 recruitment year (`year + 3`)
+
+Build it by joining calendar-year series on `year`, then shifting the `_t1`/`_t3`
+columns with `dplyr::lead()` (see `analysis/build_cohort_table.R`). The newest
+~3 cohorts will have `NA` in the `_t1`/`_t3` columns — keep them; DSEM and PCMCI+
+both treat `NA` as missing states.
+
+**Rows:** roughly one per year from the start of the usable record (~1977, or the
+1982 survey era) through the most recent cohort. Do not pre-standardize or
+drop NA rows — the analysis scripts standardize and handle gaps.
+
+## Columns (enabled set: DAGs A, B, D)
+
+| column | stage | reads year | description | likely source |
+|---|---|---|---|---|
+| `year` | index | — | cohort birth (age-0) year | assessment year vector |
+| `SSB` | spawning supply | t | spawning stock biomass that produced the cohort | `ebswp` pm model |
+| `ice_retreat_t` | physical forcing | t | sea-ice retreat timing over the SEBS shelf (day-of-year) | ESR / BASIS physical |
+| `late_summer_SST_t` | physical forcing | t | late-summer sea surface temperature | `coldpool` / ESR |
+| `wind_mixing_t` | physical forcing | t | summer wind-mixing / storminess index | ESR |
+| `copepod_euphausiid_t` | prey | t | large-copepod + euphausiid biomass index | zoop survey (Eisner et al.) |
+| `age0_energy_t` | age-0 condition | t | age-0 fall total energy / energy density | BASIS (Heintz et al.; Moss et al.) |
+| `cold_pool_t1` | physical | t+1 | cold pool extent (bottom area ≤ 2 °C) in the age-1 year | `coldpool` pkg (Rohan et al.) |
+| `age1_index_t1` | survey | t+1 | age-1 abundance index | survey / assessment |
+| `adult_pollock_biomass_t1` | predator | t+1 | adult (age-3+) pollock biomass — cannibalism proxy | `ebswp` pm model |
+| `arrowtooth_biomass_t1` | predator | t+1 | arrowtooth flounder biomass | ATF assessment (Spencer et al.) |
+| `juvenile_predator_overlap_t1` | predator | t+1 | juvenile–predator spatial overlap index | VAST overlap product *(project gap)* |
+| `age3_recruitment_t3` | **response** | t+3 | age-3 recruitment of the cohort | derived (survival to age 3, or carried R) |
+
+## Optional columns (add only to enable DAG C — transport)
+
+| column | reads year | description |
+|---|---|---|
+| `spawning_location_t` | t | spawning-location index (e.g. mean latitude / on-shelf fraction) |
+| `larval_transport_t` | t | wind/circulation-driven larval transport index |
+| `prey_match_t` | t | spatial match between larvae and copepod prey |
+| `age0_abundance_t` | t | age-0 abundance / size index |
+
+## Notes
+
+- **`SSB` timing:** EBS pollock spawn in spring of year *t* and produce age-0 in
+  the same year, so `SSB` is read at `t` (contemporaneous with the cohort).
+- **`age3_recruitment_t3` vs the assessment's age-1 R:** this table uses age-3 as
+  the response to match the cohort-survival framing and Ma et al. (2026). If you
+  prefer the assessment's age-1 recruitment, rename to `age1_recruitment_t1` and
+  update the response node in `analysis/dsem_fit.R`.
+- **One indicator per concept per run:** avoid putting several near-identical
+  proxies (e.g. SST and cold pool *and* ice retreat) into the same DAG; they are
+  collinear. Pick the best per pathway, as the PCMCI+ guidance also recommends.

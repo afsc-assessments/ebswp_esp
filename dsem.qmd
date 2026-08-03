@@ -1,0 +1,108 @@
+---
+title: "DSEM Confirmatory Estimation"
+description: "Using a dynamic structural equation model to estimate effect sizes for the candidate recruitment DAGs and rank them by AIC."
+---
+
+A dynamic structural equation model (DSEM) is a confirmatory complement to the PCMCI+ screening. Where PCMCI+ discovers and ranks individual candidate links under conditional-independence tests, DSEM takes a **specified** directed graph and estimates the standardized strength of every path simultaneously, then lets competing graphs be compared by information criteria [@thorson2024dsem]. This is the same approach Ma et al. used to disentangle the multi-causal recruitment dynamics of Northeast Arctic cod, the Barents Sea analogue of EBS pollock [@ma2026neac].
+
+## Role In This Project
+
+The DAGs on the [DAGs](dags.qmd) page define the scientific alternatives. PCMCI+ asks *which links are supported by the data*. DSEM asks two further questions:
+
+- **How large is each effect, controlling for the others?** All paths are estimated jointly on standardized series, so the slopes are comparable effect sizes rather than pairwise correlations.
+- **Which whole hypothesis fits best?** Each DAG (A bottom-up, B top-down, C transport, D switching) is fit as a single model and the four are ranked by AIC. This is the confirmatory analogue of the model-selection step in @ma2026neac.
+
+The two methods share one input — `data/cohort_table.csv` — and one preprocessing convention, so their results are directly cross-readable.
+
+## Why DSEM Rather Than A Plain SEM
+
+The EBS early-survival series are short and gappy, and the candidate drivers are collinear (temperature, cold pool, and ice timing co-vary). DSEM is built for exactly this setting [@thorson2024dsem]:
+
+- internal missing values are handled as a state-space process rather than by deleting cohorts,
+- simultaneous and lagged paths can coexist, which matters for the prior-cohort link in DAG D,
+- shared variation among collinear drivers is distributed across paths, so each coefficient reflects the additional explanatory power beyond the others,
+- standardized slopes make the four hypotheses comparable on one scale.
+
+## Lag Convention
+
+Because the cohort table already aligns every variable to the year class (`*_t` for the age-0 year, `*_t1` for age 1, `*_t3` for age-3 recruitment), the structural paths are written at lag 0 in the cohort frame. The genuinely dynamic element is reserved for DAG D, where the previous year class helps set the predator field — a real lag-1 link in cohort time. A calendar-year alternative, in which the cohort timing is encoded by DSEM lag arguments instead of in the column names, is the closer mirror of @ma2026neac and is noted in the analysis script.
+
+## The Four Hypotheses As DSEM Specifications
+
+Each DAG becomes a short path specification (`from -> to, lag, name`). The full, runnable definitions are in `analysis/dsem_fit.R`; the structure is:
+
+| DAG | Backbone of estimated paths |
+|---|---|
+| **A. Bottom-up** | ice / wind / SST $\rightarrow$ copepod-euphausiid $\rightarrow$ age-0 energy $\rightarrow$ recruitment; SSB $\rightarrow$ recruitment |
+| **B. Top-down** | adult pollock, arrowtooth, cold pool, SST $\rightarrow$ juvenile-predator overlap $\rightarrow$ recruitment; SSB $\rightarrow$ recruitment |
+| **C. Transport** | SST / wind $\rightarrow$ spawning location and transport $\rightarrow$ prey match and age-0 abundance $\rightarrow$ recruitment |
+| **D. Switching** | bottom-up chain to age-1, top-down overlap to recruitment, plus a prior-cohort (lag-1) carryover; state-dependence added as an interaction or regime split |
+
+DAG A treats age-0 total energy as the central mediator, consistent with the strong condition–survival evidence for EBS pollock [@heintz2013; @moss2009; @siddon2013; @sigler2016]. DAG B encodes the overlap-driven predation filter [@mueter2006; @spencer2016]. DAG D follows the oscillating-control reading in which climate state switches which filter dominates [@mueter2006; @mueter2011; @sigler2016].
+
+## Minimal R Workflow
+
+```r
+library(dsem)
+library(dplyr)
+
+cohort <- readr::read_csv("data/cohort_table.csv", show_col_types = FALSE)
+
+# standardize; keep NAs (dsem treats them as states)
+z     <- function(x) as.numeric(scale(x))
+nodes <- setdiff(names(cohort), "year")
+tsdat <- ts(as.data.frame(lapply(cohort[nodes], z)), start = min(cohort$year))
+
+dag_B <- "
+  SSB                          -> age3_recruitment_t3,         0, ssb_R
+  adult_pollock_biomass_t1     -> juvenile_predator_overlap_t1, 0, adult_ov
+  arrowtooth_biomass_t1        -> juvenile_predator_overlap_t1, 0, atf_ov
+  cold_pool_t1                 -> juvenile_predator_overlap_t1, 0, cp_ov
+  late_summer_SST_t            -> juvenile_predator_overlap_t1, 0, sst_ov
+  juvenile_predator_overlap_t1 -> age3_recruitment_t3,          0, ov_R
+"
+
+fit <- dsem(sem = dag_B, tsdata = tsdat, estimate_delta0 = TRUE,
+            family = rep("normal", ncol(tsdat)))
+summary(fit)   # standardized path coefficients
+AIC(fit)       # for ranking against DAGs A, C, D
+```
+
+The four DAGs are fit on the same `tsdat`, so the AIC differences reflect structure rather than data coverage. The DAG with the lowest AIC is the best-supported whole hypothesis; its summary gives the signed, standardized effect of each path.
+
+## Sensitivity Analyses
+
+Run the winning DAG through the four robustness checks used by @ma2026neac, on the same cohort table:
+
+| Check | Question | Output |
+|---|---|---|
+| Causal-map stability | Do paths persist across rolling windows? | retention frequency per path |
+| Data uncertainty | Are slopes robust to input CI? | bootstrap slope distributions and *p* |
+| Data richness | Do conclusions need long series? | slope vs. start year |
+| Nonstationarity | Do slopes change sign over time? | rolling-window slopes |
+
+The nonstationarity check is the highest-value one for EBS pollock: it tests directly whether an environment–recruitment slope has reversed, the pattern Ma et al. found for cod and the concern behind projected pollock declines under warming [@mueter2011; @spencer2016]. A reversal here would also be evidence for DAG D over a single stationary coefficient.
+
+## Interpreting Output
+
+| Output item | Interpretation |
+|---|---|
+| path slope | standardized effect of source on target, controlling for other paths |
+| slope sign | direction of the hypothesized mechanism |
+| AIC / $\Delta$AIC | relative support for the whole DAG against the other hypotheses |
+| rolling slope | nonstationarity; sign change supports switching control |
+
+As with PCMCI+, causal language stays conditional: DSEM estimates effect sizes *under an assumed graph*. Its contribution is to quantify and rank the hypotheses the DAGs and PCMCI+ put forward, not to prove a mechanism on its own.
+
+## Limitations
+
+DSEM shares the short-series and nonstationarity vulnerabilities of any method applied to these data, and adds the assumption that relationships are linear. Gadid temperature responses are often dome-shaped, so a linear SST term cannot represent an optimum; Ma et al. note the same limitation and that a quadratic term changes their projections [@ma2026neac]. The cohort-aligned, basin-scale form also collapses the spatial overlap mechanisms that DAGs B and C are really about — the strongest extension would supply VAST-based overlap fields rather than scalar indices.
+
+## Deliverables To Add To The Repository
+
+| File | Purpose |
+|---|---|
+| `analysis/build_cohort_table.R` | Assemble `data/cohort_table.csv` from the assessment, `coldpool`, and ESP indicators |
+| `analysis/dsem_fit.R` | Fit DAGs A–D, rank by AIC, run sensitivity analyses |
+| `outputs/dsem_paths.csv` | Standardized path coefficients with SE and *p* for the best DAG |
+| `outputs/dsem_aic.csv` | AIC and $\Delta$AIC for the four hypotheses |

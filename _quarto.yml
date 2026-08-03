@@ -6,6 +6,7 @@ project:
     - evidence.qmd
     - dags.qmd
     - pcmci.qmd
+    - dsem.qmd
     - infographics.qmd
     - public-infographics.qmd
     - references.qmd
@@ -25,6 +26,8 @@ website:
         text: DAGs
       - href: pcmci.qmd
         text: PCMCI+
+      - href: dsem.qmd
+        text: DSEM
       - href: infographics.qmd
         text: Infographics
       - href: public-infographics.qmd
